@@ -1,0 +1,1280 @@
+<!doctype html>
+<html lang="vi">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Giảm cân 15 tuần</title>
+<meta name="theme-color" content="#14161A">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<meta name="apple-mobile-web-app-title" content="PPL 15">
+<link rel="manifest" href="manifest.webmanifest">
+<link rel="apple-touch-icon" href="icon-180.png">
+<link rel="icon" href="icon-192.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Barlow+Semi+Condensed:wght@500;600;700&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg:#F2F0EB; --card:#FFFFFF; --card2:#F7F5F1; --line:#E3DFD7; --ink:#1A1C21; --muted:#6A6F7A;
+  --accent:#9A6E0A; --accent-ink:#FFFFFF; --accent-soft:#F5E9CC; --good:#2B7A6D; --good-soft:#DDEFEA;
+  --bad:#B9503D; --chip:#EAE7E0;
+  --num:"Barlow Semi Condensed","Arial Narrow",system-ui,sans-serif;
+  --body:system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
+  box-sizing:border-box;
+  padding-top:env(safe-area-inset-top,0px);
+  padding-bottom:env(safe-area-inset-bottom,0px);
+}
+@media (prefers-color-scheme:dark){
+  :root:not([data-theme="light"]){
+    --bg:#14161A; --card:#1C1F25; --card2:#232730; --line:#30343D; --ink:#ECEAE4; --muted:#8C919C;
+    --accent:#F0BE4B; --accent-ink:#17181C; --accent-soft:#3A3220; --good:#79BCAE; --good-soft:#1F3330;
+    --bad:#E07E6C; --chip:#262A32;
+  }
+}
+:root[data-theme="dark"]{
+  --bg:#14161A; --card:#1C1F25; --card2:#232730; --line:#30343D; --ink:#ECEAE4; --muted:#8C919C;
+  --accent:#F0BE4B; --accent-ink:#17181C; --accent-soft:#3A3220; --good:#79BCAE; --good-soft:#1F3330;
+  --bad:#E07E6C; --chip:#262A32;
+}
+html{scroll-padding-top:env(safe-area-inset-top,0px)}
+*,*::before,*::after{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--ink);font-family:var(--body);font-size:16px;line-height:1.45;-webkit-font-smoothing:antialiased;-webkit-tap-highlight-color:transparent}
+button{font:inherit;color:inherit;cursor:pointer}
+input,textarea{font:inherit;color:inherit}
+main{max-width:560px;margin:0 auto;padding:0 14px calc(88px + env(safe-area-inset-bottom,0px))}
+[hidden]{display:none!important}
+.n{font-family:var(--num);font-variant-numeric:tabular-nums}
+.muted{color:var(--muted)}
+
+/* header */
+.hd{padding:18px 2px 6px;display:flex;align-items:flex-end;gap:12px}
+.hd-l{flex:1;min-width:0}
+.hd-date{color:var(--muted);font-size:14px}
+.hd-title{font-family:var(--num);font-weight:700;font-size:34px;line-height:1.05;letter-spacing:.005em}
+.hd-title small{font-size:20px;color:var(--muted);font-weight:500}
+.sync{font-size:12px;color:var(--muted);white-space:nowrap;padding-bottom:6px}
+.sync i{display:inline-block;width:7px;height:7px;border-radius:50%;background:var(--muted);margin-right:5px;vertical-align:1px}
+.sync.on i{background:var(--good)}
+.wkbar{display:grid;grid-template-columns:repeat(15,1fr);gap:3px;margin:8px 2px 4px}
+.wkbar span{height:5px;border-radius:3px;background:var(--line)}
+.wkbar span.done{background:var(--good)}
+.wkbar span.now{background:var(--accent)}
+
+/* cards */
+.card{background:var(--card);border:1px solid var(--line);border-radius:18px;padding:16px;margin:12px 0}
+.card-h{display:flex;align-items:baseline;justify-content:space-between;gap:10px;margin-bottom:12px}
+.card-h h2{margin:0;font-family:var(--num);font-weight:700;font-size:22px;letter-spacing:.01em}
+.card-h .aside{font-size:13px;color:var(--muted)}
+
+/* buttons */
+.btn{border:1px solid var(--line);background:var(--card2);border-radius:12px;min-height:46px;padding:0 16px;font-weight:600;font-size:15px}
+.btn:active{transform:scale(.98)}
+.btn.primary{background:var(--accent);border-color:var(--accent);color:var(--accent-ink)}
+.btn.block{width:100%}
+.btn.ghost{background:transparent}
+.btn.danger{color:var(--bad)}
+.btn-row{display:flex;gap:8px;margin-top:12px}
+.btn-row .btn{flex:1}
+
+/* chips */
+.chips{display:flex;gap:7px;overflow-x:auto;padding:2px 0 4px;scrollbar-width:none;-webkit-overflow-scrolling:touch}
+.seg{display:grid;grid-template-columns:1fr 1fr;gap:4px;background:var(--chip);border-radius:12px;padding:4px;margin:0 0 10px}
+.seg button{border:none;background:transparent;border-radius:9px;min-height:42px;font-size:14px;font-weight:600;color:var(--muted)}
+.seg button.on{background:var(--card);color:var(--ink);box-shadow:0 1px 3px rgba(0,0,0,.14)}
+.chips::-webkit-scrollbar{display:none}
+.chip{flex:0 0 auto;border:1px solid var(--line);background:var(--chip);border-radius:999px;min-height:38px;padding:0 14px;font-size:14px;font-weight:600;white-space:nowrap;color:var(--muted)}
+.chip.on{background:var(--accent);border-color:var(--accent);color:var(--accent-ink)}
+.chip .dot{display:inline-block;width:6px;height:6px;border-radius:50%;background:var(--good);margin-left:6px;vertical-align:2px}
+.chip.on .dot{background:var(--accent-ink)}
+
+/* banner */
+.note{background:var(--accent-soft);border-radius:12px;padding:10px 12px;font-size:14px;margin:10px 0}
+.note.good{background:var(--good-soft)}
+.note.plain{background:var(--card2)}
+
+/* setup */
+.setup p{margin:0 0 12px;color:var(--muted);font-size:15px}
+.date-in{width:100%;min-height:48px;border:1px solid var(--line);border-radius:12px;background:var(--card2);padding:0 12px;font-size:16px}
+
+/* weight */
+.w-row{display:flex;gap:8px}
+.w-in{flex:1;min-width:0;min-height:56px;border:1px solid var(--line);border-radius:14px;background:var(--card2);text-align:center;font-family:var(--num);font-size:30px;font-weight:700;padding:0 10px}
+.w-in:focus,.fld input:focus,.date-in:focus,.search input:focus,.sheet input:focus,textarea:focus{outline:2px solid var(--accent);outline-offset:1px;border-color:transparent}
+.w-row .btn{min-height:56px;padding:0 22px}
+.w-stats{display:flex;gap:16px;margin-top:12px;flex-wrap:wrap}
+.w-stat .v{font-family:var(--num);font-size:24px;font-weight:700;line-height:1.1}
+.w-stat .l{font-size:12px;color:var(--muted)}
+.w-stat .v.good{color:var(--good)}
+.w-stat .v.bad{color:var(--bad)}
+.w-stat .v.warn{color:var(--accent)}
+.tips{margin:12px 0 0;padding:0;list-style:none}
+.tips li{position:relative;padding:9px 0 9px 16px;border-top:1px solid var(--line);font-size:14.5px;line-height:1.45}
+.tips li:first-child{border-top:none}
+.tips li::before{content:"";position:absolute;left:2px;top:17px;width:6px;height:6px;border-radius:50%;background:var(--accent)}
+.linkbtn{border:none;background:none;color:var(--accent);font-weight:600;font-size:14px;padding:8px 0 0}
+.ex-meta{display:flex;align-items:center;gap:8px;margin-top:6px;font-size:12.5px;color:var(--muted);flex-wrap:wrap}
+.rest-b{border:1px solid var(--line);background:var(--card2);border-radius:999px;min-height:30px;padding:0 11px;font-size:13px;font-weight:700;font-family:var(--num);letter-spacing:.02em;color:var(--ink)}
+.rest-b:active{background:var(--accent);color:var(--accent-ink)}
+.timer{position:fixed;left:0;right:0;bottom:calc(72px + env(safe-area-inset-bottom,0px));z-index:30;display:flex;justify-content:center;padding:0 14px;pointer-events:none}
+.t-in{pointer-events:auto;display:flex;align-items:center;gap:8px;background:var(--ink);color:var(--bg);border-radius:999px;padding:7px 7px 7px 18px;box-shadow:0 8px 24px rgba(0,0,0,.25);max-width:440px;width:100%}
+.t-lab{font-size:13px;font-weight:600;opacity:.85}
+.t-v{font-family:var(--num);font-size:28px;font-weight:700;flex:1;font-variant-numeric:tabular-nums}
+.t-in button{border:none;border-radius:999px;min-height:42px;padding:0 14px;font-weight:700;font-size:14px;background:rgba(127,127,127,.28);color:inherit}
+.timer.done .t-in{background:var(--good);color:#fff}
+.rs{padding:12px 0;border-top:1px solid var(--line)}
+.rs:first-child{border-top:none;padding-top:2px}
+.rs h4{margin:0 0 4px;font-size:15px}
+.rs p{margin:0 0 4px;font-size:14px}
+.rs .src{font-size:12px;color:var(--muted)}
+.steps{display:flex;align-items:center;gap:12px}
+.st-in{width:120px;min-height:46px;border:1px solid var(--line);border-radius:12px;background:var(--card2);text-align:center;font-family:var(--num);font-size:22px;font-weight:700}
+.st-in:focus,.ib-f input:focus{outline:2px solid var(--accent);outline-offset:1px;border-color:transparent}
+.st-bar{flex:1;height:8px;border-radius:4px;background:var(--line);overflow:hidden}
+.st-bar i{display:block;height:100%;background:var(--good);border-radius:4px;transition:width .3s ease}
+.st-cap{font-size:12px;color:var(--muted);margin-top:4px}
+.ib-f{display:grid;grid-template-columns:1fr 1fr;gap:8px}
+.ib-f input{width:100%;min-height:46px;border:1px solid var(--line);border-radius:12px;background:var(--card2);padding:0 12px;font-size:16px}
+.ib-f .full{grid-column:1/-1}
+.proj{background:var(--card2);border-radius:12px;padding:12px;margin-top:12px;font-size:14px}
+.proj b{font-family:var(--num);font-size:18px}
+
+/* workout */
+.wk-step{display:flex;align-items:center;gap:2px}
+.wk-step button{width:36px;height:36px;border-radius:10px;border:1px solid var(--line);background:var(--card2);font-size:18px;line-height:1}
+.wk-step span{font-family:var(--num);font-weight:600;font-size:17px;min-width:64px;text-align:center}
+.wo-title{font-family:var(--num);font-size:28px;font-weight:700;margin:12px 0 2px;line-height:1.1}
+.wo-sub{color:var(--muted);font-size:14px;margin-bottom:4px}
+.ex{padding:14px 0;border-top:1px solid var(--line)}
+.ex:first-of-type{border-top:none}
+.ex.dim{opacity:.45}
+.ex-top{display:flex;gap:10px;align-items:flex-start}
+.ex-no{flex:0 0 26px;height:26px;border-radius:8px;background:var(--chip);display:grid;place-items:center;font-family:var(--num);font-weight:700;font-size:15px;color:var(--muted)}
+.ex-name{font-weight:600;font-size:16px;line-height:1.25}
+.ex-sub{font-size:13px;color:var(--muted)}
+.ex-in{display:flex;align-items:center;gap:8px;margin:10px 0 0 36px}
+.fld{position:relative;display:block}
+.fld span{position:absolute;top:5px;left:0;right:0;text-align:center;font-size:10px;letter-spacing:.08em;color:var(--muted);pointer-events:none;text-transform:uppercase}
+.fld input{width:70px;height:52px;border:1px solid var(--line);border-radius:12px;background:var(--card2);text-align:center;font-family:var(--num);font-size:22px;font-weight:700;padding:12px 0 0;font-variant-numeric:tabular-nums}
+.last{border:1px dashed var(--line);background:transparent;border-radius:10px;min-height:40px;padding:0 10px;font-size:13px;color:var(--muted);line-height:1.15;text-align:left}
+.last b{font-family:var(--num);font-size:15px;color:var(--ink)}
+.delta{margin-left:auto;font-family:var(--num);font-weight:700;font-size:18px;color:var(--muted);min-width:44px;text-align:right}
+.delta.up{color:var(--good)}
+.delta.down{color:var(--bad)}
+.delta.pop{animation:pop .4s ease}
+@keyframes pop{0%{transform:scale(1.45)}100%{transform:scale(1)}}
+textarea.wo-note{width:100%;min-height:72px;border:1px solid var(--line);border-radius:12px;background:var(--card2);padding:10px 12px;font-size:15px;resize:vertical;margin-top:12px}
+.cardio{display:flex;gap:10px;align-items:center;margin-top:12px;padding:12px;border-radius:12px;background:var(--card2);font-size:14px}
+.cardio b{font-family:var(--num);font-size:16px}
+.rest{text-align:center;padding:18px 6px 8px}
+.rest .big{font-family:var(--num);font-size:30px;font-weight:700}
+.rest p{color:var(--muted);margin:6px 0 0;font-size:15px}
+
+/* macros */
+.macros{display:grid;grid-template-columns:repeat(4,1fr);gap:10px}
+.mac .v{font-family:var(--num);font-size:26px;font-weight:700;line-height:1}
+.mac .l{font-size:11px;color:var(--muted);margin-top:3px;line-height:1.25}
+.mac .bar{height:5px;border-radius:3px;background:var(--line);margin-top:7px;overflow:hidden}
+.mac .bar i{display:block;height:100%;background:var(--accent);border-radius:3px;transition:width .3s ease}
+.mac.hit .v{color:var(--good)}
+.mac.hit .bar i{background:var(--good)}
+.mac.over .v{color:var(--bad)}
+.mac.over .bar i{background:var(--bad)}
+.meal-g{margin-top:14px}
+.meal-g h3{margin:0 0 4px;font-size:13px;letter-spacing:.06em;text-transform:uppercase;color:var(--muted);font-weight:700;display:flex;justify-content:space-between}
+.it{display:flex;align-items:center;gap:10px;padding:10px 0;border-bottom:1px solid var(--line)}
+.it:last-child{border-bottom:none}
+.it-m{flex:1;min-width:0}
+.it-n{font-size:15px;font-weight:500;line-height:1.25}
+.it-q{font-size:13px;color:var(--muted)}
+.it-k{font-family:var(--num);font-weight:700;font-size:18px}
+.x{width:36px;height:36px;border-radius:10px;border:none;background:var(--card2);color:var(--muted);font-size:18px;line-height:1;flex:0 0 auto}
+.empty{color:var(--muted);text-align:center;padding:14px 4px;font-size:14px}
+.tpl{margin-top:12px}
+.tpl .lab{font-size:13px;color:var(--muted);margin-bottom:6px}
+
+/* library */
+.search{position:sticky;top:env(safe-area-inset-top,0px);z-index:5;background:var(--bg);padding:12px 0 8px}
+.search input{width:100%;min-height:50px;border:1px solid var(--line);border-radius:14px;background:var(--card);padding:0 14px;font-size:16px}
+.lib-list{margin-top:8px}
+.lib-g{font-family:var(--num);font-weight:700;font-size:18px;margin:18px 2px 6px;color:var(--accent)}
+.food{display:flex;align-items:center;gap:12px;width:100%;text-align:left;border:none;background:var(--card);border-radius:14px;padding:12px 14px;margin:6px 0;border:1px solid var(--line)}
+.food:active{background:var(--card2)}
+.food-m{flex:1;min-width:0}
+.food-n{font-weight:600;font-size:15px;line-height:1.25}
+.food-s{font-size:13px;color:var(--muted)}
+.food-k{text-align:right}
+.food-k .v{font-family:var(--num);font-weight:700;font-size:20px;line-height:1}
+.food-k .l{font-size:11px;color:var(--muted)}
+.dock{position:fixed;left:0;right:0;bottom:calc(64px + env(safe-area-inset-bottom,0px));z-index:15;display:flex;justify-content:center;pointer-events:none}
+.dock div{pointer-events:auto;background:var(--ink);color:var(--bg);border-radius:999px;padding:9px 16px;font-size:14px;font-weight:600;box-shadow:0 6px 20px rgba(0,0,0,.18)}
+.dock .n{font-size:16px}
+
+/* progress */
+.hero-v{font-family:var(--num);font-size:56px;font-weight:700;line-height:.95}
+.hero-v small{font-size:22px;color:var(--muted);font-weight:500}
+.track{height:8px;border-radius:4px;background:var(--line);margin:14px 0 6px;overflow:hidden}
+.track i{display:block;height:100%;background:var(--good);border-radius:4px}
+.track-cap{display:flex;justify-content:space-between;font-size:12px;color:var(--muted)}
+.chart{width:100%;height:auto;display:block;margin-top:6px}
+.row{display:flex;align-items:center;gap:10px;padding:10px 0;border-bottom:1px solid var(--line);font-size:15px}
+.row:last-child{border-bottom:none}
+.row .grow{flex:1;min-width:0}
+.row .v{font-family:var(--num);font-weight:700;font-size:18px}
+.row .s{font-family:var(--num);font-size:15px;color:var(--muted);min-width:52px;text-align:right}
+.lift-g{font-family:var(--num);font-weight:700;font-size:17px;color:var(--accent);margin:14px 0 2px}
+
+/* plan */
+details{background:var(--card);border:1px solid var(--line);border-radius:16px;margin:10px 0;overflow:hidden}
+summary{list-style:none;padding:15px 16px;font-weight:700;font-size:16px;display:flex;justify-content:space-between;align-items:center;cursor:pointer}
+summary::-webkit-details-marker{display:none}
+summary::after{content:"+";font-family:var(--num);font-size:22px;color:var(--muted);line-height:1}
+details[open] summary::after{content:"−"}
+.dbody{padding:0 16px 14px;font-size:15px}
+.dbody p{margin:0 0 10px}
+.dbody ul{margin:0 0 10px;padding-left:20px}
+.dbody li{margin:3px 0}
+.pl-ex{display:flex;gap:10px;padding:9px 0;border-bottom:1px solid var(--line)}
+.pl-ex:last-child{border-bottom:none}
+.pl-ex .s{margin-left:auto;font-family:var(--num);font-weight:600;color:var(--muted);white-space:nowrap}
+.kv{display:flex;justify-content:space-between;gap:12px;padding:8px 0;border-bottom:1px solid var(--line)}
+.kv:last-child{border-bottom:none}
+.kv span:last-child{color:var(--muted);text-align:right}
+.pgs{display:grid;gap:8px;margin:4px 0 6px}
+.pg{display:block;width:100%;text-align:left;border:1px solid var(--line);background:var(--card);border-radius:16px;padding:14px 16px}
+.pg.on{border-color:var(--accent);box-shadow:inset 0 0 0 1px var(--accent)}
+.pg b{font-family:var(--num);font-size:21px;font-weight:700}
+.pg .s{display:block;color:var(--muted);font-size:13px;margin-top:2px}
+.pg .tag{float:right;font-size:11px;font-weight:700;letter-spacing:.06em;color:var(--accent);margin-top:4px}
+textarea.imp{width:100%;min-height:90px;border:1px solid var(--line);border-radius:12px;background:var(--card2);padding:10px;font-size:13px;font-family:ui-monospace,Menlo,monospace}
+
+/* nav */
+.tabs{position:fixed;left:0;right:0;bottom:0;z-index:20;background:var(--card);border-top:1px solid var(--line);display:grid;grid-template-columns:repeat(4,1fr);padding-bottom:env(safe-area-inset-bottom,0px)}
+.tabs button{border:none;background:none;min-height:62px;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:3px;font-size:12px;font-weight:600;color:var(--muted)}
+.tabs svg{width:23px;height:23px;stroke:currentColor;fill:none;stroke-width:1.9;stroke-linecap:round;stroke-linejoin:round}
+.tabs button.on{color:var(--accent)}
+
+/* sheet */
+.scrim{position:fixed;inset:0;background:rgba(0,0,0,.4);z-index:40;opacity:0;pointer-events:none;transition:opacity .2s ease}
+.scrim.on{opacity:1;pointer-events:auto}
+.sheet{position:fixed;left:0;right:0;bottom:0;z-index:41;background:var(--card);border-radius:22px 22px 0 0;max-height:88%;overflow-y:auto;transform:translateY(105%);transition:transform .25s ease;padding:8px 18px calc(18px + env(safe-area-inset-bottom,0px))}
+.sheet.on{transform:translateY(0)}
+.sheet-in{max-width:560px;margin:0 auto}
+.grab{width:42px;height:5px;border-radius:3px;background:var(--line);margin:4px auto 12px}
+.sh-t{font-family:var(--num);font-size:26px;font-weight:700;line-height:1.1;margin:0 0 2px}
+.sh-s{color:var(--muted);font-size:14px;margin-bottom:14px}
+.qty{display:flex;align-items:center;gap:10px;margin:6px 0 10px}
+.qty button{width:52px;height:52px;border-radius:14px;border:1px solid var(--line);background:var(--card2);font-size:24px;line-height:1}
+.qty input{flex:1;min-width:0;height:52px;border:1px solid var(--line);border-radius:14px;background:var(--card2);text-align:center;font-family:var(--num);font-size:28px;font-weight:700}
+.qty .u{font-size:15px;color:var(--muted);min-width:40px}
+.prev{display:grid;grid-template-columns:repeat(4,1fr);gap:8px;background:var(--card2);border-radius:14px;padding:12px;margin:10px 0 14px}
+.prev div{text-align:center}
+.prev .v{font-family:var(--num);font-size:22px;font-weight:700;line-height:1}
+.prev .l{font-size:11px;color:var(--muted);margin-top:2px}
+.lbl{font-size:13px;color:var(--muted);margin:10px 0 6px}
+.f2{display:grid;grid-template-columns:1fr 1fr;gap:8px}
+.f2 input,.f1 input{width:100%;min-height:48px;border:1px solid var(--line);border-radius:12px;background:var(--card2);padding:0 12px;font-size:16px}
+
+.toast{position:fixed;left:50%;bottom:calc(76px + env(safe-area-inset-bottom,0px));transform:translateX(-50%) translateY(10px);background:var(--ink);color:var(--bg);padding:10px 16px;border-radius:999px;font-size:14px;font-weight:600;z-index:60;opacity:0;transition:all .22s ease;pointer-events:none;max-width:90%;text-align:center}
+.toast.on{opacity:1;transform:translateX(-50%) translateY(0)}
+
+@media (prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}}
+</style>
+</head>
+<body>
+<main>
+  <section id="v-today"></section>
+  <section id="v-lib" hidden></section>
+  <section id="v-prog" hidden></section>
+  <section id="v-plan" hidden></section>
+</main>
+
+<div class="dock" id="dock" hidden><div id="dockIn"></div></div>
+
+<nav class="tabs" id="tabs">
+  <button data-act="tab" data-v="today" class="on"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M4.9 4.9l1.4 1.4M17.7 17.7l1.4 1.4M2 12h2M20 12h2M4.9 19.1l1.4-1.4M17.7 6.3l1.4-1.4"/></svg>Hôm nay</button>
+  <button data-act="tab" data-v="lib"><svg viewBox="0 0 24 24"><path d="M4 5h16M4 12h16M4 19h10"/></svg>Thư viện</button>
+  <button data-act="tab" data-v="prog"><svg viewBox="0 0 24 24"><path d="M3 17l6-6 4 4 8-8"/><path d="M15 7h6v6"/></svg>Tiến độ</button>
+  <button data-act="tab" data-v="plan"><svg viewBox="0 0 24 24"><rect x="4" y="3" width="16" height="18" rx="2"/><path d="M8 8h8M8 12h8M8 16h5"/></svg>Kế hoạch</button>
+</nav>
+
+<div class="scrim" id="scrim" data-act="close"></div>
+<div class="sheet" id="sheet" role="dialog" aria-modal="true"><div class="sheet-in" id="sheetIn"></div></div>
+<div class="timer" id="timer" hidden><div class="t-in"><span class="t-lab" id="tLab">Nghỉ</span><span class="t-v" id="tV">0:00</span><button data-act="t-add">+30s</button><button data-act="t-stop">Xong</button></div></div>
+<div class="toast" id="toast"></div>
+
+<script>
+(function(){
+"use strict";
+
+/* ================= helpers ================= */
+const $ = (s, r) => (r || document).querySelector(s);
+const esc = s => String(s == null ? "" : s).replace(/[&<>"']/g, c => ({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]));
+const r1 = n => Math.round(n * 10) / 10;
+const fmt = (n, d) => { const v = d === 0 ? Math.round(n) : r1(n); return String(v).replace(".", ","); };
+const fmtK = n => Math.round(n).toLocaleString("vi-VN");
+const pad = n => String(n).padStart(2, "0");
+const iso = d => d.getFullYear() + "-" + pad(d.getMonth() + 1) + "-" + pad(d.getDate());
+const todayISO = () => iso(new Date());
+const parseISO = s => { const a = s.split("-").map(Number); return new Date(a[0], a[1] - 1, a[2]); };
+const mondayOf = d => { const x = new Date(d.getFullYear(), d.getMonth(), d.getDate()); x.setDate(x.getDate() - ((x.getDay() + 6) % 7)); return x; };
+const ddmm = s => s.slice(8) + "/" + s.slice(5, 7);
+const clone = o => o == null ? o : JSON.parse(JSON.stringify(o));
+const num = v => { const n = parseFloat(String(v).replace(",", ".").trim()); return isNaN(n) ? null : n; };
+const rid = () => Math.random().toString(36).slice(2, 10);
+const kc = (p, f, c) => p * 4 + f * 9 + c * 4;
+const DAYS = ["Chủ nhật","Thứ 2","Thứ 3","Thứ 4","Thứ 5","Thứ 6","Thứ 7"];
+
+/* ================= plan data ================= */
+const START_KG = 98, GOAL_KG = 85, WEEKS = 15;
+const C30 = "Đi bộ dốc 6–8%, 30 phút", C20 = "Đi bộ dốc 2–4%, 20 phút";
+const PROGRAMS = {
+  ppl:{name:"Push · Pull · Legs", short:"PPL", desc:"Cân bằng toàn thân. Mỗi nhóm cơ 2 lần mỗi tuần.",
+    skip:{pullB:[1], legsB:[1,2]}, trim:"Bỏ bài 7–8 mỗi buổi", drop:"Bỏ Push B hoặc Pull B → còn 5 ngày",
+    weekly:[["Lưng",20],["Ngực",17],["Đùi sau / mông",15],["Đùi trước",13],["Tay trước",12],["Bắp chân",12],["Bụng",11],["Vai giữa",10],["Tay sau",10],["Vai sau",10]],
+    sessions:[
+    {id:"pushA",label:"Push A",wd:1,focus:"Ngực nặng",cardio:C30,ex:[
+      ["Barbell Bench Press","Đẩy ngực đòn","4×6–8"],["Standing Barbell OHP","Đẩy vai đòn đứng","3×8–10"],
+      ["Incline Dumbbell Press","Đẩy ngực trên tạ đơn","3×10–12"],["Cable Chest Fly","Ép ngực cáp","2×12–15"],
+      ["Triceps Pushdown","Đẩy tay sau bằng cáp","3×12–15"],["Dumbbell Lateral Raise","Nâng tạ đơn sang ngang","3×15–20"],
+      ["Overhead Triceps Extension","Duỗi tay sau qua đầu","2×12–15"],["Cable Lateral Raise","Nâng cáp sang ngang","2×15–20"]]},
+    {id:"pullA",label:"Pull A",wd:2,focus:"Kéo ngang nặng",cardio:C30,ex:[
+      ["Barbell Row","Chèo tạ đòn","4×6–8"],["Lat Pulldown","Kéo xô trước mặt","3×10–12"],
+      ["Seated Cable Row","Chèo cáp ngồi","3×10–12"],["Face Pull","Kéo cáp ngang mặt","3×15–20"],
+      ["Dumbbell Biceps Curl","Cuốn tay trước tạ đơn","3×10–12"],["Hammer Curl","Cuốn tay kiểu búa","2×12–15"],
+      ["Rear Delt Fly","Bay vai sau","2×15–20"],["Incline Dumbbell Curl","Cuốn tay ghế nghiêng","2×10–12"]]},
+    {id:"legsA",label:"Legs A",wd:3,focus:"Đùi trước",cardio:C20,legs:true,ex:[
+      ["Barbell Back Squat","Squat đòn sau gáy","4×6–8"],["Romanian Deadlift","Deadlift kiểu Romania","3×8–10"],
+      ["Leg Press","Đạp đùi máy","3×12–15"],["Lying Leg Curl","Cuốn đùi sau nằm","3×12–15"],
+      ["Standing Calf Raise","Nhón bắp chân đứng","4×15–20"],["Hanging Leg Raise","Treo xà nâng chân","3×10–15"],
+      ["Seated Calf Raise","Nhón bắp chân ngồi","2×15–20"],["Cable Crunch","Gập bụng cáp quỳ","2×12–15"]]},
+    {id:"pushB",label:"Push B",wd:4,focus:"Vai, rep cao",cardio:C30,ex:[
+      ["Seated DB Shoulder Press","Đẩy vai tạ đơn ngồi","4×8–10"],["Incline Barbell Press","Đẩy ngực trên đòn","3×8–10"],
+      ["Machine Chest Press","Đẩy ngực máy","3×12–15"],["Dumbbell Lateral Raise","Nâng tạ đơn sang ngang","3×15–20"],
+      ["Overhead Triceps Extension","Duỗi tay sau qua đầu","3×12–15"],["Cable Chest Fly","Ép ngực cáp","2×15–20"],
+      ["Machine Lateral Raise","Nâng vai máy","2×15–20"],["Triceps Pushdown","Đẩy tay sau bằng cáp","2×12–15"]]},
+    {id:"pullB",label:"Pull B",wd:5,focus:"Kéo dọc, rep cao",cardio:C30,ex:[
+      ["Assisted Pull-up","Hít xà có hỗ trợ","4×8–10"],["Chest-Supported Row","Chèo tựa ngực","3×10–12"],
+      ["Straight-Arm Pulldown","Kéo xô tay thẳng","3×12–15"],["Rear Delt Fly","Bay vai sau","3×15–20"],
+      ["EZ-Bar Curl","Cuốn tay đòn EZ","3×10–12"],["Cable Crunch","Gập bụng cáp quỳ","3×12–15"],
+      ["Face Pull","Kéo cáp ngang mặt","2×15–20"],["Hammer Curl","Cuốn tay kiểu búa","2×12–15"]]},
+    {id:"legsB",label:"Legs B",wd:6,focus:"Mông, đùi sau",cardio:C20,legs:true,ex:[
+      ["Trap Bar Deadlift","Deadlift khung lục giác","3×5–6"],["Bulgarian Split Squat","Squat chân sau kê ghế","3×8–10 / chân"],
+      ["Barbell Hip Thrust","Đẩy hông đòn","3×10–12"],["Leg Extension","Duỗi đùi trước máy","3×12–15"],
+      ["Seated Leg Curl","Cuốn đùi sau ngồi","3×12–15"],["Seated Calf Raise","Nhón bắp chân ngồi","4×15–20"],
+      ["Standing Calf Raise","Nhón bắp chân đứng","2×15–20"],["Hanging Leg Raise","Treo xà nâng chân","3×10–15"]]}
+  ]},
+  upper:{name:"Ưu tiên thân trên", short:"Thân trên", desc:"Thân trên 4 buổi, chân 2 buổi ở mức duy trì. Dồn sức hồi phục cho ngực, lưng, vai, tay.",
+    skip:{saB:[1], lB:[1,2]}, trim:"Bỏ bài 7 mỗi buổi", drop:"Bỏ Vai & Tay B → còn 5 ngày",
+    weekly:[["Lưng",18],["Ngực",17],["Vai giữa",11],["Tay trước",10],["Tay sau",10],["Vai sau",9],["Đùi sau / mông",10],["Đùi trước",9],["Bắp chân",6],["Bụng",6]],
+    sessions:[
+    {id:"uA",label:"Upper A",wd:1,focus:"Ngực & lưng nặng",cardio:C30,ex:[
+      ["Barbell Bench Press","Đẩy ngực đòn","4×5–7"],["Assisted Pull-up","Hít xà có hỗ trợ","4×6–8"],
+      ["Incline Dumbbell Press","Đẩy ngực trên tạ đơn","3×8–10"],["Chest-Supported Row","Chèo tựa ngực","3×8–10"],
+      ["Dumbbell Lateral Raise","Nâng tạ đơn sang ngang","3×12–15"],["Cable Chest Fly","Ép ngực cáp","2×12–15"],
+      ["Straight-Arm Pulldown","Kéo xô tay thẳng","2×12–15"]]},
+    {id:"saA",label:"Vai & Tay A",wd:2,focus:"Vai giữa, tay nặng",cardio:C30,ex:[
+      ["Seated DB Shoulder Press","Đẩy vai tạ đơn ngồi","3×6–8"],["Dumbbell Lateral Raise","Nâng tạ đơn sang ngang","4×12–15"],
+      ["Close-Grip Bench Press","Đẩy ngực tay hẹp","3×8–10"],["EZ-Bar Curl","Cuốn tay đòn EZ","3×8–10"],
+      ["Rear Delt Fly","Bay vai sau","3×15–20"],["Incline Dumbbell Curl","Cuốn tay ghế nghiêng","2×10–12"],
+      ["Overhead Triceps Extension","Duỗi tay sau qua đầu","2×10–12"]]},
+    {id:"lA",label:"Chân A",wd:3,focus:"Duy trì — đùi trước",cardio:C20,legs:true,ex:[
+      ["Barbell Back Squat","Squat đòn sau gáy","3×5–7"],["Romanian Deadlift","Deadlift kiểu Romania","3×6–8"],
+      ["Leg Press","Đạp đùi máy","2×10–12"],["Lying Leg Curl","Cuốn đùi sau nằm","2×10–12"],
+      ["Standing Calf Raise","Nhón bắp chân đứng","3×12–15"],["Cable Crunch","Gập bụng cáp quỳ","3×12–15"]]},
+    {id:"uB",label:"Upper B",wd:4,focus:"Ngực trên & lưng xô, rep cao",cardio:C30,ex:[
+      ["Incline Barbell Press","Đẩy ngực trên đòn","3×8–10"],["Lat Pulldown","Kéo xô trước mặt","3×10–12"],
+      ["Machine Chest Press","Đẩy ngực máy","3×10–12"],["Seated Cable Row","Chèo cáp ngồi","3×10–12"],
+      ["Single-Arm Dumbbell Row","Chèo tạ đơn một tay","3×10–12"],["Face Pull","Kéo cáp ngang mặt","3×15–20"],
+      ["Pec Deck Fly","Ép ngực máy","2×12–15"]]},
+    {id:"saB",label:"Vai & Tay B",wd:5,focus:"Vai, tay rep cao",cardio:C30,ex:[
+      ["Machine Shoulder Press","Đẩy vai máy","3×8–10"],["Cable Lateral Raise","Nâng cáp sang ngang","4×12–15"],
+      ["Triceps Pushdown","Đẩy tay sau bằng cáp","3×10–12"],["Hammer Curl","Cuốn tay kiểu búa","3×10–12"],
+      ["Reverse Pec Deck","Bay vai sau bằng máy","3×15–20"],["Cable Curl","Cuốn tay cáp","2×12–15"],
+      ["EZ-Bar Skull Crusher","Duỗi tay sau nằm đòn EZ","2×10–12"]]},
+    {id:"lB",label:"Chân B",wd:6,focus:"Duy trì — mông, đùi sau",cardio:C20,legs:true,ex:[
+      ["Trap Bar Deadlift","Deadlift khung lục giác","3×5"],["Bulgarian Split Squat","Squat chân sau kê ghế","2×8–10 / chân"],
+      ["Barbell Hip Thrust","Đẩy hông đòn","2×10–12"],["Leg Extension","Duỗi đùi trước máy","2×12–15"],
+      ["Seated Calf Raise","Nhón bắp chân ngồi","3×12–15"],["Hanging Leg Raise","Treo xà nâng chân","3×10–15"]]}
+  ]}
+};
+const ALL_SESSIONS = Object.keys(PROGRAMS).reduce((a, k) => a.concat(PROGRAMS[k].sessions), []);
+const planOf = id => ALL_SESSIONS.find(p => p.id === id);
+function progKey(){ const s = get("settings"); return s && PROGRAMS[s.program] ? s.program : "ppl"; }
+const prog = () => PROGRAMS[progKey()];
+
+const MEALS = ["Sáng","Trưa","Phụ","Tối"];
+const TEMPLATES = {
+  "Sáng":[["Trứng gà nguyên quả","3 quả",18.9,14.4,1.2],["Yến mạch khô","50g",6.5,3.5,33.5],["Sữa tươi không đường","200 ml",6.6,6.6,9.6],["Whey protein","1 muỗng (30g)",24,1.5,2.5]],
+  "Trưa":[["Ức gà không da (sống)","220g",49.5,5.7,0],["Cơm trắng (chín)","200g",5.4,0.6,56],["Rau xanh luộc","200g",5,0.4,8],["Dầu ăn","10g",0,10,0]],
+  "Tối":[["Cá basa phi lê (sống)","250g",40,6.3,0],["Cơm trắng (chín)","160g",4.3,0.5,44.8],["Rau xanh luộc","200g",5,0.4,8],["Dầu ăn","10g",0,10,0],["Sữa chua Hy Lạp không đường","150g",15,0.6,5.4]]
+};
+
+/* food library: [name, group, unit, per, P, F, C, default qty, extra kcal (alcohol) per "per"] */
+const G = ["Thịt & cá (sống)","Đã nấu chín","Món nhà nấu","Trứng & sữa","Tinh bột","Rau & trái cây","Dầu & hạt","Đồ uống","Món ăn ngoài","Ăn vặt"];
+const [RAW, CK, HOME, EGG, CARB, VEG, FAT, DRK, OUT, SNK] = G;
+const FOODS = [
+  ["Ức gà không da (sống)",RAW,"g",100,22.5,2.6,0,220],["Đùi gà bỏ da (sống)",RAW,"g",100,20,4.1,0,150],
+  ["Thịt bò thăn nạc (sống)",RAW,"g",100,21,6,0,150],["Thịt bò xay (sống)",RAW,"g",100,17,20,0,150],
+  ["Thịt heo nạc thăn (sống)",RAW,"g",100,21,4,0,150],["Thịt ba chỉ heo (sống)",RAW,"g",100,16.5,21.5,0,100],
+  ["Sườn heo (sống)",RAW,"g",100,16,23,0,150],["Cá basa phi lê (sống)",RAW,"g",100,16,2.5,0,250],
+  ["Cá diêu hồng (sống)",RAW,"g",100,20,1.7,0,200],["Cá hồi (sống)",RAW,"g",100,20,13,0,150],
+  ["Cá thu (sống)",RAW,"g",100,19,14,0,150],["Tôm (sống)",RAW,"g",100,20,0.5,0,200],
+  ["Mực (sống)",RAW,"g",100,15.6,1.4,3,150],["Đậu hũ trắng",RAW,"g",100,8,4.8,1.9,200],
+
+  ["Ức gà luộc / nướng",CK,"g",100,31,3.6,0,160],["Đùi gà bỏ da nướng",CK,"g",100,26,10.9,0,120],
+  ["Gà luộc cả da",CK,"g",100,27.3,13.6,0,150],["Bò thăn áp chảo",CK,"g",100,29,8.5,0,120],
+  ["Bò xào (có dầu)",CK,"g",100,24,13,3,120],["Thịt heo nạc luộc",CK,"g",100,27,7,0,120],
+  ["Thịt ba chỉ luộc",CK,"g",100,18,27,0,80],["Thịt kho (ba chỉ)",CK,"g",100,17,25,6,100],
+  ["Sườn nướng / sườn ram",CK,"g",100,25,25,6,120],["Cá basa áp chảo",CK,"g",100,20,7,0,180],
+  ["Cá hồi áp chảo",CK,"g",100,22,12,0,120],["Cá chiên giòn",CK,"g",100,18,14,6,120],
+  ["Tôm luộc / hấp",CK,"g",100,24,0.3,0,150],["Tôm rang",CK,"g",100,22,8,5,120],
+  ["Mực xào",CK,"g",100,17,7,5,150],["Trứng luộc",CK,"quả",1,6.3,4.8,0.4,2],
+  ["Trứng ốp la / chiên",CK,"quả",1,6.3,7,0.4,2],["Đậu hũ chiên",CK,"g",100,15,18,6,100],
+  ["Cá ngừ hộp ngâm nước",CK,"g",100,24,1,0,100],["Giò lụa / chả lụa",CK,"g",100,14,11,3,50],
+
+  ["Thịt kho trứng",HOME,"phần",1,23,30,6,1],["Cá kho tộ",HOME,"phần",1,22,12,9,1],
+  ["Gà kho gừng",HOME,"phần",1,30,14,6,1],["Gà luộc có da (phần 150g)",HOME,"phần",1,41,20,0,1],
+  ["Sườn xào chua ngọt",HOME,"phần",1,26,24,18,1],["Bò xào rau",HOME,"phần",1,22,14,8,1],
+  ["Bò lúc lắc",HOME,"phần",1,32,20,8,1],["Cánh gà chiên nước mắm (3 cánh)",HOME,"phần",1,24,22,10,1],
+  ["Đậu hũ sốt cà",HOME,"phần",1,14,14,12,1],["Đậu hũ nhồi thịt sốt cà",HOME,"phần",1,18,18,10,1],
+  ["Trứng chiên (2 quả)",HOME,"dĩa",1,12.6,16,1,1],["Chả trứng hấp",HOME,"phần",1,14,12,3,1],
+  ["Rau muống xào tỏi",HOME,"dĩa",1,5,10,8,1],["Canh chua cá",HOME,"tô",1,15,5,12,1],
+  ["Canh rau nấu thịt",HOME,"tô",1,8,4,5,1],["Canh bí / canh bầu",HOME,"tô",1,3,3,10,1],
+  ["Canh khổ qua nhồi thịt",HOME,"tô",1,15,10,8,1],["Cơm chiên trứng",HOME,"dĩa",1,14,18,85,1],
+  ["Mì xào bò",HOME,"dĩa",1,22,22,70,1],
+
+  ["Trứng gà nguyên quả",EGG,"quả",1,6.3,4.8,0.4,3],["Lòng trắng trứng gà",EGG,"quả",1,3.6,0.1,0.2,3],
+  ["Trứng vịt lộn",EGG,"quả",1,13,12,4,1],["Sữa tươi không đường",EGG,"ml",100,3.3,3.3,4.8,200],
+  ["Sữa tươi có đường",EGG,"ml",100,3.1,3.2,8.5,180],["Sữa đậu nành có đường",EGG,"ml",100,3,1.6,7,200],
+  ["Sữa chua Hy Lạp không đường",EGG,"g",100,10,0.4,3.6,150],["Sữa chua có đường",EGG,"hũ",1,3.5,3,14,1],
+  ["Whey protein (muỗng 30g)",EGG,"muỗng",1,24,1.5,2.5,1],["Phô mai lát",EGG,"lát",1,3.8,4.8,1,1],
+
+  ["Cơm trắng (chín)",CARB,"g",100,2.7,0.3,28,200],["Cơm gạo lứt (chín)",CARB,"g",100,2.6,0.9,23,200],
+  ["Bún tươi",CARB,"g",100,1.7,0.1,25,200],["Bánh phở tươi",CARB,"g",100,2,0.4,26,200],
+  ["Mì trứng (đã luộc)",CARB,"g",100,4.5,2,25,150],["Bánh mì không",CARB,"ổ",1,7,2,42,1],
+  ["Bánh mì sandwich nguyên cám",CARB,"lát",1,4,1,13,2],["Yến mạch khô",CARB,"g",100,13,7,67,50],
+  ["Khoai lang luộc",CARB,"g",100,1.6,0.1,20,200],["Khoai tây luộc",CARB,"g",100,2,0.1,17,200],
+  ["Bắp luộc",CARB,"trái",1,5,2,32,1],["Mì gói",CARB,"gói",1,7,14,52,1],
+
+  ["Rau xanh luộc (muống, cải…)",VEG,"g",100,2.5,0.2,4,200],["Bông cải xanh",VEG,"g",100,2.8,0.4,7,150],
+  ["Dưa leo",VEG,"g",100,0.7,0.1,3.6,150],["Cà chua",VEG,"g",100,0.9,0.2,3.9,100],
+  ["Chuối",VEG,"quả",1,1.1,0.3,23,1],["Táo",VEG,"quả",1,0.5,0.3,25,1],["Cam",VEG,"quả",1,1.4,0.2,18,1],
+  ["Ổi",VEG,"quả",1,2.6,1,14,1],["Xoài chín",VEG,"g",100,0.8,0.4,15,150],["Dưa hấu",VEG,"g",100,0.6,0.2,7.6,300],
+  ["Đu đủ",VEG,"g",100,0.5,0.3,11,200],["Thanh long",VEG,"g",100,1.2,0.4,13,200],["Bơ (trái)",VEG,"g",100,2,15,9,100],
+
+  ["Dầu ăn",FAT,"thìa cà phê",1,0,5,0,2],["Bơ đậu phộng",FAT,"thìa canh",1,4,8,3,1],
+  ["Hạnh nhân",FAT,"g",100,21,50,10,30],["Đậu phộng rang",FAT,"g",100,25,49,13,30],["Hạt điều rang",FAT,"g",100,18,44,30,30],
+
+  ["Nước lọc / trà đá",DRK,"ly",1,0,0,0,1],["Cà phê đen không đường",DRK,"ly",1,0.3,0,0,1],
+  ["Cà phê đen có đường",DRK,"ly",1,0.3,0,10,1],["Cà phê sữa đá",DRK,"ly",1,2.5,3.5,22,1],
+  ["Bạc xỉu",DRK,"ly",1,4,5,28,1],["Trà sữa trân châu",DRK,"ly",1,3,10,70,1],["Nước mía",DRK,"ly",1,0,0,50,1],
+  ["Sinh tố bơ",DRK,"ly",1,4,18,45,1],["Nước cam ép",DRK,"ly",1,1.7,0.5,26,1],
+  ["Nước ngọt có ga",DRK,"lon",1,0,0,35,1],["Nước ngọt không đường (zero)",DRK,"lon",1,0,0,0,1],
+  ["Trà xanh đóng chai",DRK,"chai",1,0,0,30,1],["Nước tăng lực",DRK,"lon",1,0,0,28,1],
+  ["Bia",DRK,"lon",1,1.5,0,12,1,92],["Rượu vang",DRK,"ly",1,0.1,0,4,1,105],["Rượu trắng 40%",DRK,"chén",1,0,0,0,1,66],
+
+  ["Phở bò",OUT,"tô",1,30,12,60,1],["Bún bò Huế",OUT,"tô",1,30,18,65,1],["Hủ tiếu",OUT,"tô",1,25,12,62,1],
+  ["Mì Quảng",OUT,"tô",1,25,15,65,1],["Bún riêu",OUT,"tô",1,20,12,60,1],["Bún chả",OUT,"phần",1,28,22,65,1],
+  ["Bún thịt nướng",OUT,"tô",1,25,15,70,1],["Cơm tấm sườn bì chả",OUT,"dĩa",1,38,28,90,1],
+  ["Cơm sườn nướng",OUT,"dĩa",1,30,20,85,1],["Cơm gà xối mỡ",OUT,"dĩa",1,35,30,85,1],
+  ["Bánh mì thịt",OUT,"ổ",1,18,18,50,1],["Bánh mì ốp la",OUT,"ổ",1,15,16,45,1],["Bánh cuốn",OUT,"dĩa",1,12,10,55,1],
+  ["Xôi mặn",OUT,"phần",1,14,16,70,1],["Cháo gà",OUT,"tô",1,18,6,40,1],["Gỏi cuốn",OUT,"cuốn",1,5,1,12,2],
+  ["Chả giò chiên",OUT,"cuốn",1,3,6,7,3],["Bánh xèo",OUT,"cái",1,12,20,35,1],["Gà rán",OUT,"miếng",1,20,15,10,1],
+  ["Hamburger bò",OUT,"cái",1,25,22,40,1],["Pizza",OUT,"miếng",1,12,10,33,1],["Khoai tây chiên",OUT,"phần",1,4,17,44,1],
+
+  ["Chè",SNK,"ly",1,4,6,50,1],["Bánh flan",SNK,"cái",1,4,3,18,1],["Kem",SNK,"viên",1,2,7,16,1],
+  ["Snack khoai tây (gói 30g)",SNK,"gói",1,2,10,16,1],["Bánh quy (~30g)",SNK,"phần",1,2,7,20,1],
+  ["Socola sữa (thanh 40g)",SNK,"thanh",1,3,12,24,1]
+].map((a, i) => ({key:"b" + i, n:a[0], g:a[1], u:a[2], per:a[3], p:a[4], f:a[5], c:a[6], def:a[7], x:a[8] || 0}));
+
+const isMass = u => u === "g" || u === "ml";
+const qtyLabel = (u, q) => isMass(u) ? fmt(q, 0) + (u === "ml" ? " ml" : "g") : fmt(q) + " " + u;
+function macrosOf(food, q){
+  const m = q / food.per;
+  if (food.k != null) return {p:(food.p||0)*m, f:(food.f||0)*m, c:(food.c||0)*m, k:food.k*m};
+  return {p:food.p*m, f:food.f*m, c:food.c*m, k:(kc(food.p, food.f, food.c) + food.x) * m};
+}
+
+/* ================= store (db sync + local cache) ================= */
+const LS_KEY = "ppl15.v2";
+const S = {docs:{}, col:null, pending:{}, inflight:{}, timer:null, cloud:false, needRender:false};
+
+function lsLoad(){ try { const t = localStorage.getItem(LS_KEY); if (t) S.docs = JSON.parse(t) || {}; } catch(e) {} }
+function lsSave(){ try { localStorage.setItem(LS_KEY, JSON.stringify(S.docs)); } catch(e) {} }
+const get = id => S.docs[id];
+
+function put(id, data){
+  S.docs[id] = data;
+  lsSave();
+  if (S.col){ S.pending[id] = data; schedule(500); }
+}
+function schedule(ms){ clearTimeout(S.timer); S.timer = setTimeout(flush, ms); }
+async function flush(){
+  if (!S.col) return;
+  for (const id of Object.keys(S.pending)){
+    if (S.inflight[id]) continue;
+    const data = S.pending[id];
+    delete S.pending[id];
+    S.inflight[id] = true;
+    try { await S.col.doc(id).set(data); }
+    catch(e){
+      const code = e && e.code;
+      if (code === "unavailable" || code === "resource_exhausted"){
+        if (!S.pending[id]) S.pending[id] = data;
+        delete S.inflight[id];
+        schedule(1500 + Math.random() * 1500);
+        return;
+      }
+      if (code === "quota_exceeded"){ toast("Bộ nhớ đồng bộ đã đầy — dữ liệu chỉ còn lưu trên máy này"); }
+      S.col = null; S.cloud = false; renderSync();
+    }
+    delete S.inflight[id];
+  }
+  if (Object.keys(S.pending).length) schedule(300);
+}
+
+async function initCloud(){
+  try {
+    if (!window.claude || typeof window.claude.use !== "function") { renderSync(); return; }
+    const [db, user] = await Promise.all([window.claude.use("db"), window.claude.use("user")]);
+    if (!db || !user) { renderSync(); return; }
+    const uid = await user.id();
+    if (!uid) { renderSync(); return; }
+    S.col = db.collection("data/users/" + uid);
+    let first = true;
+    S.col.onSnapshot(snap => {
+      const remote = {};
+      snap.docs.forEach(d => { if (d.exists) remote[d.id] = d.data(); });
+      if (first){
+        first = false;
+        Object.keys(S.docs).forEach(id => { if (!(id in remote)) S.pending[id] = S.docs[id]; });
+        if (Object.keys(S.pending).length) schedule(200);
+      }
+      let changed = false;
+      for (const id in remote){
+        if (S.pending[id] || S.inflight[id]) continue;
+        const v = JSON.stringify(remote[id]);
+        if (JSON.stringify(S.docs[id]) !== v){ S.docs[id] = JSON.parse(v); changed = true; }
+      }
+      S.cloud = true; renderSync();
+      if (changed){ lsSave(); softRender(); }
+    }, () => { S.col = null; S.cloud = false; renderSync(); });
+  } catch(e) { renderSync(); }
+}
+
+function softRender(){
+  const a = document.activeElement;
+  if (a && (a.tagName === "INPUT" || a.tagName === "TEXTAREA")) { S.needRender = true; return; }
+  render();
+}
+document.addEventListener("focusout", () => {
+  setTimeout(() => {
+    const a = document.activeElement;
+    if (S.needRender && !(a && (a.tagName === "INPUT" || a.tagName === "TEXTAREA"))) { S.needRender = false; render(); }
+  }, 60);
+});
+
+/* ================= derived state ================= */
+const V = {tab:"today", week:null, wid:undefined, grp:"Tất cả", q:"", libMeal:null};
+
+function startDate(){ const s = get("settings"); return s && s.startDate ? s.startDate : null; }
+function progWeek(){
+  const sd = startDate(); if (!sd) return null;
+  return Math.floor((mondayOf(new Date()) - mondayOf(parseISO(sd))) / (7 * 864e5)) + 1;
+}
+const clampW = w => Math.max(1, Math.min(WEEKS, w || 1));
+function targetsFor(week){
+  if (week && week <= 2) return {kcal:[2200,2400], p:[170,190], f:[55,65], c:[170,250]};
+  return {kcal:[1900,2100], p:[170,190], f:[55,65], c:[120,180]};
+}
+function weights(){ const w = get("weights"); return (w && w.map) || {}; }
+function avg7(key, map){
+  const end = parseISO(key).getTime(), start = end - 6 * 864e5;
+  let s = 0, n = 0;
+  for (const k in map){ const t = parseISO(k).getTime(); if (t >= start && t <= end){ s += map[k]; n++; } }
+  return n >= 3 ? s / n : null;
+}
+function shiftISO(key, days){ const d = parseISO(key); d.setDate(d.getDate() + days); return iso(d); }
+function dayItems(key){ const d = get("day_" + key); return (d && d.items) || []; }
+function totals(items){ return items.reduce((t, it) => ({p:t.p+it.p, f:t.f+it.f, c:t.c+it.c, k:t.k+it.k}), {p:0,f:0,c:0,k:0}); }
+const logId = (wid, w) => "log_" + wid + "_" + w;
+function prevOf(wid, i, week){
+  for (let w = week - 1; w >= 1; w--){
+    const d = get(logId(wid, w));
+    if (d && d.s && d.s[i] && typeof d.s[i].kg === "number") return {w, kg:d.s[i].kg, r:d.s[i].r};
+  }
+  return null;
+}
+function defaultMeal(){
+  const h = new Date().getHours() + new Date().getMinutes() / 60;
+  return h < 10.5 ? "Sáng" : h < 14 ? "Trưa" : h < 17.5 ? "Phụ" : "Tối";
+}
+function customFoods(){ const d = get("foods"); return ((d && d.custom) || []).map(f => Object.assign({key:"c" + f.id, g:"Món của tôi", per:1, def:1, x:0}, f)); }
+function findFood(key){ return key[0] === "c" ? customFoods().find(f => f.key === key) : FOODS.find(f => f.key === key); }
+
+/* ================= strategy (evidence-based) ================= */
+const SLEEP = [["lt6","Dưới 6h"],["6-7","6–7h"],["7-8","7–8h"],["8p","Trên 8h"]];
+function inbody(){ const d = get("inbody"); return ((d && d.entries) || []).slice().sort((a, b) => a.d < b.d ? -1 : a.d > b.d ? 1 : 0); }
+function latestBF(){ const e = inbody(); return e.length ? e[e.length - 1] : null; }
+function fatHigh(){ const L = latestBF(); return !!(L && L.bf >= 25); }
+function rateBand(){ return fatHigh() ? [0.7, 1.2] : [0.5, 1.0]; }
+function phaseOf(week){
+  if (week <= 2) return "Khớp lại nhịp";
+  if (week === 8 || week === 9) return "Deload";
+  if (week >= 11) return "Chặng cuối";
+  return "Giảm mỡ + tăng tạ";
+}
+const restFor = i => i < 2 ? 180 : i < 4 ? 120 : 75;
+function rirFor(i, week, sleep){
+  if (week <= 2) return "dừng khi còn dư 3–4 rep";
+  if (week === 8 || week === 9) return "dừng khi còn dư 4 rep";
+  const tired = sleep === "lt6";
+  if (i < 2) return tired ? "dừng khi còn dư 3 rep" : "dừng khi còn dư 2 rep";
+  if (i < 4) return tired ? "dừng khi còn dư 2–3 rep" : "dừng khi còn dư 1–2 rep";
+  return tired ? "dừng khi còn dư 2 rep" : "set cuối được sát thất bại";
+}
+function stepsCap(n){ if (!n) return "Mục tiêu 10.000–12.000 bước"; if (n >= 10000) return "Đạt mục tiêu · ~" + fmtK(n * 0.05) + " kcal từ đi lại"; return "Còn " + fmtK(10000 - n) + " bước nữa tới 10.000"; }
+const mmss = s => Math.floor(s / 60) + ":" + pad(Math.max(0, Math.round(s % 60)));
+function rateInfo(){
+  const wm = weights(), tk = todayISO();
+  const a = avg7(tk, wm), b = avg7(shiftISO(tk, -7), wm);
+  if (a == null || b == null) return null;
+  const kg = b - a, pct = kg / b * 100, pw = progWeek() || 0;
+  const [lo, hi] = rateBand(), band = fmt(lo) + "–" + fmt(hi) + "%/tuần";
+  let cls, msg;
+  if (pct > hi){ cls = "warn"; msg = pw && pw <= 2 ? "Giảm nhanh ở tuần 1–2 chủ yếu do mất nước và glycogen — bình thường." : "Nhanh hơn vùng " + band + ". Nếu kéo dài 2 tuần, thêm 100–150 kcal/ngày để giữ cơ."; }
+  else if (pct >= lo){ cls = "good"; msg = "Đúng vùng " + band + (fatHigh() ? " cho mức mỡ hiện tại — giảm mỡ tối đa mà vẫn giữ cơ." : " — tốc độ giữ cơ tốt nhất."); }
+  else if (pct >= 0){ cls = "warn"; msg = "Chậm hơn vùng " + band + ". Theo dõi thêm 1 tuần; 2 tuần liền thì đi bộ thêm 2.000–3.000 bước/ngày trước, rồi mới tính cắt 100–150 kcal."; }
+  else { cls = "bad"; msg = "Trung bình tuần đang tăng. Kiểm tra lại đồ uống, dầu ăn và các bữa ăn ngoài."; }
+  return {kg, pct, cls, msg};
+}
+const RESEARCH = [
+  ["Mỡ càng nhiều, giảm nhanh càng ít mất cơ","Khối mỡ ban đầu càng cao thì phần cơ trong cân nặng mất đi càng nhỏ. Vì vậy khi InBody còn trên 25% mỡ, app chấp nhận tốc độ 0,7–1,2%/tuần; xuống dưới 25% thì quay về 0,5–1% như khuyến nghị cho người đã gọn.","Hall 2007 — Br J Nutr (mở rộng lý thuyết Forbes); Helms, Aragon & Fitschen 2014 — J Int Soc Sports Nutr"],
+  ["Vừa giảm mỡ vừa tăng cơ là khả thi","Người nhiều mỡ và người đã tập quay lại sau thời gian nghỉ là hai nhóm dễ đạt nhất — bạn thuộc cả hai. Điều kiện là tập tạ tăng tiến, protein cao, ngủ đủ. Vì vậy tuần 3–10 app nhắc cố tăng tạ, không chỉ giữ tạ.","Barakat và cs. 2020 — Strength Cond J"],
+  ["Protein 2,3–3,1 g/kg khối nạc","Ở 98kg và 30% mỡ, khối nạc khoảng 69kg, tương ứng 158–213g. Mục tiêu 170–190g nằm trong vùng này. Chia đều 3–4 bữa.","Helms, Aragon & Fitschen 2014 — J Int Soc Sports Nutr"],
+  ["Ít nhất 10 set mỗi nhóm cơ mỗi tuần, tập ≥2 lần/tuần","Dưới 5 set/tuần cho kết quả kém rõ rệt. Khoảng 10–20 set là đủ; nhiều hơn thì lợi ích thêm rất nhỏ, nhất là khi đang ăn thiếu.","Schoenfeld, Ogborn & Krieger 2017 — J Sports Sci; Helms và cs. 2015 — J Sports Med Phys Fitness"],
+  ["Dừng set khi còn dư 1–3 rep","Tập tới thất bại không thêm cơ đáng kể nhưng tăng mệt mỏi. Hạn chế thất bại ở bài nặng như squat, deadlift, bench; chỉ dùng ở bài cô lập rep cao.","Refalo và cs. 2023 — Sports Med; Helms và cs. 2015"],
+  ["Phần lớn rep trong khoảng 6–12","Rep thấp (3–5) và rep cao (12–15) vẫn dùng được, nhưng phần chính nên ở 6–12 với tạ khoảng 70–80% 1RM.","Helms và cs. 2015 — J Sports Med Phys Fitness"],
+  ["Nghỉ 2–3 phút ở bài compound","Ở người đã có nền tảng, nghỉ 3 phút cho tăng sức mạnh và cơ tốt hơn nghỉ 1 phút. Bài cô lập nghỉ 1–2 phút là đủ.","Schoenfeld và cs. 2016 — J Strength Cond Res"],
+  ["Cardio: đi bộ hoặc đạp xe, thời lượng vừa phải","Cardio cản trở tăng cơ nhiều hơn khi tập dày và dài; chạy bộ cản trở nhiều hơn đạp xe. Đi bộ dốc 20–30 phút sau tạ là lựa chọn ít rủi ro.","Wilson và cs. 2012 — J Strength Cond Res"],
+  ["Ngủ đủ 7,5–8,5 tiếng","Trong một thử nghiệm ăn kiêng 2 tuần, ngủ 5,5 tiếng thay vì 8,5 tiếng làm mất khối nạc nhiều hơn khoảng 60% và mất mỡ ít hơn. Mẫu nhỏ (10 người), nhưng kết quả theo một hướng rất rõ.","Nedeltcheva và cs. 2010 — Ann Intern Med"],
+  ["Một tuần ăn duy trì giữa chặng là tùy chọn","Xen kẽ các đợt ăn duy trì giúp giảm mỡ hiệu quả hơn ở nam giới béo phì. Tổng hợp gần đây cho thấy lợi ích trao đổi chất chỉ khoảng 50 kcal/ngày — giá trị chính là giảm mệt mỏi tâm lý. Vì vậy tuần 8–9 chỉ cần khi thấy đuối.","Byrne và cs. 2018 (MATADOR) — Int J Obes; tổng hợp trên Nutrition Reviews 2025"],
+  ["Nghỉ 1 tháng không mất nhiều","Sau 3 tuần nghỉ, cơ và sức mạnh hồi phục nhanh khi tập lại, kết quả dài hạn tương đương tập liên tục. Vì vậy tuần 1–2 tập nhẹ rồi tăng dần là đủ.","Ogasawara và cs. 2013 — Eur J Appl Physiol"]
+];
+
+/* ================= render: today ================= */
+let CTX = {wid:null, week:1};
+
+function macroBlock(label, v, range, unit){
+  const pct = Math.min(100, v / range[1] * 100);
+  const cls = v > range[1] * 1.05 ? "over" : v >= range[0] ? "hit" : "";
+  return `<div class="mac ${cls}"><div class="v">${fmtK(v)}</div><div class="l">${label}<br>${range[0]}–${range[1]}${unit}</div><div class="bar"><i style="width:${pct}%"></i></div></div>`;
+}
+
+function renderToday(){
+  const el = $("#v-today");
+  const now = new Date(), wd = now.getDay();
+  const pw = progWeek();
+  const sd = startDate();
+  let h = "";
+
+  /* header */
+  let title, sub = "";
+  if (pw === null) title = "Hôm nay";
+  else if (pw < 1) { title = "Sắp bắt đầu"; sub = "Tuần 1 bắt đầu " + ddmm(iso(mondayOf(parseISO(sd)))); }
+  else if (pw > WEEKS) title = "Đã xong 15 tuần";
+  else title = `Tuần ${pw} <small>/ ${WEEKS}</small>`;
+  h += `<div class="hd"><div class="hd-l"><div class="hd-date">${DAYS[wd]} · ${pad(now.getDate())}/${pad(now.getMonth()+1)}${sub ? " · " + sub : ""}</div><div class="hd-title">${title}</div></div><div class="sync" id="syncTag"></div></div>`;
+  if (pw !== null){
+    h += `<div class="wkbar">` + Array.from({length:WEEKS}, (_, i) => `<span class="${i + 1 < pw ? "done" : i + 1 === pw ? "now" : ""}"></span>`).join("") + `</div>`;
+  }
+
+  if (needBackup()) h += `<div class="note">Đã hơn 2 tuần chưa sao lưu. Dữ liệu chỉ nằm trong máy này. <button class="linkbtn" style="padding:0" data-act="export">Sao lưu ngay →</button></div>`;
+
+  /* setup */
+  if (!sd){
+    h += `<section class="card setup"><div class="card-h"><h2>Bắt đầu</h2></div>
+      <p>Chọn ngày bắt đầu tuần 1. App sẽ tự biết hôm nay là tuần mấy và buổi nào.</p>
+      <input type="date" class="date-in" id="sdIn" value="${todayISO()}">
+      <div class="btn-row"><button class="btn primary" data-act="set-start">Bắt đầu chương trình</button></div></section>`;
+  }
+
+  /* session context */
+  const P = prog();
+  const autoS = P.sessions.find(s => s.wd === wd);
+  const autoWid = autoS ? autoS.id : null;
+  let wid = V.wid !== undefined ? V.wid : autoWid;
+  if (wid && !P.sessions.some(s => s.id === wid)) { wid = autoWid; V.wid = undefined; }
+  const week = V.week || clampW(pw);
+  CTX = {wid, week};
+
+  /* weight */
+  const wm = weights(), tk = todayISO();
+  const a = avg7(tk, wm), aPrev = avg7(shiftISO(tk, -7), wm);
+  const keys = Object.keys(wm).sort();
+  const latestAvg = keys.length ? avg7(keys[keys.length - 1], wm) : null;
+  const RI = rateInfo();
+  h += `<section class="card"><div class="card-h"><h2>Cân sáng</h2><span class="aside">sau vệ sinh, trước khi ăn</span></div>
+    <div class="w-row"><input class="w-in" id="wIn" inputmode="decimal" placeholder="kg" value="${wm[tk] != null ? fmt(wm[tk]) : ""}" aria-label="Cân nặng sáng nay"><button class="btn primary" data-act="w-save">${wm[tk] != null ? "Sửa" : "Lưu"}</button></div>
+    <div class="w-stats">
+      <div class="w-stat"><div class="v">${a != null ? fmt(a) : "—"}</div><div class="l">TB 7 ngày</div></div>
+      <div class="w-stat"><div class="v ${RI ? RI.cls : ""}">${RI ? (RI.kg >= 0 ? "↓" : "↑") + fmt(Math.abs(RI.kg)) + "kg" : "—"}</div><div class="l">${RI ? fmt(Math.abs(RI.pct)) + "%/tuần · mục tiêu " + fmt(rateBand()[0]) + "–" + fmt(rateBand()[1]) + "%" : "so với tuần trước"}</div></div>
+      <div class="w-stat"><div class="v">${latestAvg != null ? fmt(Math.max(0, latestAvg - GOAL_KG)) : "—"}</div><div class="l">kg còn lại</div></div>
+    </div>
+    ${keys.length < 3 ? `<div class="note plain">Cần ít nhất 3 lần cân trong 7 ngày để có trung bình. Chỉ tin con số trung bình — cân từng ngày lệch ±1kg là bình thường.</div>` : ""}
+  </section>`;
+
+  /* strategy */
+  const dayDoc = get("day_" + tk) || {};
+  const sl = dayDoc.sleep || null;
+  const tips = [];
+  if (!wid){
+    tips.push("<b>Ngày nghỉ:</b> ngủ bù, đi bộ nhẹ, vẫn ăn đủ protein. Cơ được giữ lại trong lúc hồi phục.");
+  } else {
+    const sleepTip = {lt6:"<b>Ngủ dưới 6 tiếng:</b> giữ nguyên tạ tuần trước, bỏ 1–2 bài cuối, không set nào tới thất bại. Thiếu ngủ khi đang cắt calo làm mất cơ nhiều hơn rõ rệt.",
+      "6-7":"<b>Ngủ hơi thiếu:</b> tập bình thường, nhưng hôm nay không cố tăng tạ.",
+      "7-8":"<b>Ngủ đủ:</b> bài nào tuần trước đủ rep cận trên ở mọi set thì hôm nay tăng tạ.",
+      "8p":"<b>Ngủ tốt:</b> bài nào tuần trước đủ rep cận trên ở mọi set thì hôm nay tăng tạ."}[sl];
+    tips.push(sleepTip || "Chọn số giờ ngủ đêm qua để app chỉnh cường độ cho hôm nay.");
+    const phase = phaseOf(week);
+    if (!(sl === "lt6" && (phase === "Giảm mỡ + tăng tạ" || phase === "Chặng cuối"))) tips.push({"Khớp lại nhịp":"<b>Cường độ:</b> dừng mọi set khi còn dư 3–4 rep. Cơ nhớ lại nhanh, không cần vội.",
+      "Giảm mỡ + tăng tạ":"<b>Cường độ:</b> bài 1–2 dừng khi còn dư 2 rep, bài 3–4 còn dư 1–2 rep, bài cô lập được sát thất bại ở set cuối. " + (fatHigh() ? "Mỡ còn nhiều và cơ đang nhớ lại, nên hãy cố thêm rep hoặc tạ mỗi tuần — đây là giai đoạn bạn vẫn tăng cơ được." : "Cố thêm rep hoặc tạ khi đủ sức."),
+      "Deload":"<b>Deload:</b> giữ tạ, cắt nửa số set, mọi set còn dư 4 rep.",
+      "Chặng cuối":"<b>Chặng cuối:</b> giữ được tạ là thắng. Không thêm set, không thêm bài."}[phase]);
+    tips.push("<b>Nghỉ giữa set:</b> 3 phút bài 1–2, 2 phút bài 3–4, khoảng 75 giây bài cô lập. Chạm nút <b>Nghỉ</b> ở mỗi bài để bấm giờ.");
+    tips.push("<b>Nhịp:</b> đẩy lên 1–2 giây, hạ xuống 2–3 giây có kiểm soát.");
+    tips.push(`<b>Cardio:</b> ${planOf(wid).cardio.toLowerCase()}, ngay sau tạ. Đi bộ dốc ít cản trở việc giữ cơ hơn chạy bộ.`);
+  }
+  tips.push("<b>Giảm mỡ trước:</b> bước chân và protein mỗi ngày quyết định nhiều hơn số set. Mỗi 1.000 bước đốt thêm khoảng 50 kcal ở cân nặng của bạn. Giảm chậm 1 tuần thì tăng bước chân trước, chưa cắt calo.");
+  if (RI) tips.push(`<b>Tốc độ giảm cân:</b> ${RI.msg}`);
+  h += `<section class="card"><div class="card-h"><h2>Chiến lược hôm nay</h2><span class="aside">${wid ? phaseOf(week) : "Ngày nghỉ"}</span></div>
+    <div class="lbl" style="margin-top:0">Đêm qua ngủ bao lâu?</div>
+    <div class="chips">${SLEEP.map(x => `<button class="chip ${sl === x[0] ? "on" : ""}" data-act="sleep" data-v="${x[0]}">${x[1]}</button>`).join("")}</div>
+    <div class="lbl">Bước chân hôm nay</div>
+    <div class="steps"><input class="st-in" id="stIn" data-in="steps" inputmode="numeric" placeholder="VD 8500" value="${dayDoc.steps != null ? dayDoc.steps : ""}" aria-label="Số bước chân hôm nay"><div style="flex:1"><div class="st-bar"><i id="stBar" style="width:${Math.min(100, (dayDoc.steps || 0) / 120)}%"></i></div><div class="st-cap" id="stCap">${stepsCap(dayDoc.steps)}</div></div></div>
+    <ul class="tips">${tips.map(t => `<li>${t}</li>`).join("")}</ul>
+    <button class="linkbtn" data-act="go-research">Xem cơ sở nghiên cứu →</button></section>`;
+
+  /* workout */
+  h += `<section class="card"><div class="card-h"><h2>Buổi tập</h2>
+      <div class="wk-step"><button data-act="wk" data-v="-1" aria-label="Tuần trước">‹</button><span>Tuần ${week}</span><button data-act="wk" data-v="1" aria-label="Tuần sau">›</button></div></div>
+    <div class="seg">` + Object.keys(PROGRAMS).map(k => `<button class="${k === progKey() ? "on" : ""}" data-act="prog-set" data-v="${k}">${PROGRAMS[k].name}</button>`).join("") + `</div>` + (progKey() === "upper" && fatHigh() ? `<div class="note">Mỡ đang trên 25%: để giảm mỡ trước, PPL tốt hơn vì tập chân nhiều hơn và tiêu hao nhiều năng lượng hơn. Ưu tiên thân trên hợp lý khi xuống khoảng 22%.</div>` : "") + `
+    <div class="chips">` + P.sessions.map(p => `<button class="chip ${p.id === wid ? "on" : ""}" data-act="pick" data-v="${p.id}">${p.label}${get(logId(p.id, week)) ? '<span class="dot"></span>' : ""}</button>`).join("") + `</div>`;
+
+  if (!wid){
+    h += `<div class="rest"><div class="big">Nghỉ hoàn toàn</div><p>Chủ nhật là ngày hồi phục duy nhất trong tuần. Đi bộ nhẹ nếu muốn, không tập nặng.</p></div>`;
+  } else {
+    const p = planOf(wid);
+    const deload = week === 8 || week === 9;
+    h += `<div class="wo-title">${p.label}</div><div class="wo-sub">${DAYS[p.wd]} · ${p.focus} · ${P.short}${wid !== autoWid ? " · đang ghi bù" : ""}</div>`;
+    if ((P.skip[wid] || []).includes(week)) h += `<div class="note">Tuần ${week} chưa chạy buổi này — tuần 1 tập 4 buổi, tuần 2 tập 5 buổi, tuần 3 mới đủ 6.</div>`;
+    else if (week <= 2) h += `<div class="note">Tuần khớp lại nhịp: giảm tạ 10–20% so với đỉnh cũ, dừng set khi còn dư 3–4 rep.${p.legs ? " Chưa tập Trap Bar Deadlift nặng." : ""}</div>`;
+    else if (deload) h += `<div class="note">Tuần deload (chọn tuần 8 hoặc 9): chỉ bài 1–6, giữ nguyên tạ, cắt nửa số set.</div>`;
+
+    const log = get(logId(wid, week)) || {};
+    const s = log.s || {};
+    p.ex.forEach((e, i) => {
+      const cur = s[i] || {};
+      const pv = prevOf(wid, i, week);
+      let dt = "—", dc = "";
+      if (pv && typeof cur.kg === "number"){ const d = r1(cur.kg - pv.kg); dt = (d > 0 ? "+" : "") + fmt(d); dc = d > 0 ? "up" : d < 0 ? "down" : ""; }
+      h += `<div class="ex ${deload && i >= 6 ? "dim" : ""}">
+        <div class="ex-top"><div class="ex-no">${i + 1}</div><div><div class="ex-name">${e[0]}</div><div class="ex-sub">${e[1]} · ${e[2]}</div><div class="ex-meta"><button class="rest-b" data-act="rest" data-v="${restFor(i)}">Nghỉ ${mmss(restFor(i))}</button><span>${i >= 6 && !deload ? "giữ tạ · " : ""}${rirFor(i, week, sl)}</span></div></div></div>
+        <div class="ex-in">
+          <label class="fld"><span>kg</span><input data-in="ex" data-i="${i}" data-k="kg" inputmode="decimal" value="${cur.kg != null ? fmt(cur.kg) : ""}" aria-label="${esc(e[0])} kg"></label>
+          <label class="fld"><span>rep</span><input data-in="ex" data-i="${i}" data-k="r" inputmode="numeric" value="${cur.r != null ? cur.r : ""}" aria-label="${esc(e[0])} rep"></label>
+          ${pv ? `<button class="last" data-act="copy" data-i="${i}">T${pv.w}<br><b>${fmt(pv.kg)}×${pv.r != null ? pv.r : "?"}</b></button>` : ""}
+          <span class="delta ${dc}" id="d${i}">${dt}</span>
+        </div></div>`;
+    });
+    h += `<textarea class="wo-note" data-in="note" placeholder="Ghi chú: cảm giác, khớp có đau không, bỏ bài nào…">${esc(log.note || "")}</textarea>
+      <div class="cardio"><span>Sau tạ</span><b>${deload ? "Đi bộ 20 phút" : p.cardio}</b></div>`;
+  }
+  h += `</section>`;
+
+  /* food */
+  const items = dayItems(tk), t = totals(items), tg = targetsFor(pw);
+  h += `<section class="card"><div class="card-h"><h2>Ăn hôm nay</h2><span class="aside">${fmtK(t.k)} kcal</span></div>
+    <div class="macros">${macroBlock("kcal", t.k, tg.kcal, "")}${macroBlock("protein", t.p, tg.p, "g")}${macroBlock("fat", t.f, tg.f, "g")}${macroBlock("carb", t.c, tg.c, "g")}</div>`;
+  if (!items.length) h += `<div class="empty">Chưa ghi món nào. Thêm từ thư viện hoặc chạm bữa mẫu bên dưới.</div>`;
+  MEALS.forEach(m => {
+    const its = items.filter(it => it.m === m);
+    if (!its.length) return;
+    h += `<div class="meal-g"><h3><span>${m}</span><span>${fmtK(totals(its).k)} kcal</span></h3>` +
+      its.map(it => `<div class="it"><div class="it-m"><div class="it-n">${esc(it.n)}</div><div class="it-q">${esc(it.qt)} · P ${fmt(it.p, 0)}g</div></div><div class="it-k">${fmtK(it.k)}</div><button class="x" data-act="rm" data-v="${it.id}" aria-label="Xoá">×</button></div>`).join("") + `</div>`;
+  });
+  h += `<div class="btn-row"><button class="btn primary" data-act="go-lib">+ Thêm món</button></div>
+    <div class="tpl"><div class="lab">Bữa mẫu theo kế hoạch — chạm để thêm cả bữa</div><div class="chips">` +
+    Object.keys(TEMPLATES).map(m => `<button class="chip" data-act="tpl" data-v="${m}">${m} · ${fmtK(TEMPLATES[m].reduce((s, x) => s + kc(x[2], x[3], x[4]), 0))}</button>`).join("") + `</div></div>`;
+  if (wid && planOf(wid).legs) h += `<div class="note good">Hôm nay tập chân: thêm 60g cơm chín ở bữa tối (+78 kcal).</div>`;
+  h += `</section>`;
+
+  el.innerHTML = h;
+  renderSync();
+}
+
+/* ================= render: library ================= */
+function renderLib(){
+  const el = $("#v-lib");
+  if (!el.dataset.built){
+    el.innerHTML = `<div class="hd"><div class="hd-l"><div class="hd-date">${FOODS.length} món phổ biến</div><div class="hd-title">Thư viện calo</div></div></div>
+      <div class="search"><input id="qIn" data-in="q" type="search" placeholder="Tìm: phở, trứng, bia, trà sữa…" autocomplete="off"></div>
+      <div class="chips" id="grpChips"></div>
+      <div class="btn-row"><button class="btn" data-act="new-food">+ Món tự nhập</button></div>
+      <div class="lib-list" id="libList"></div>
+      <p class="muted" style="font-size:12px;margin:18px 2px">Số liệu theo bảng thành phần thực phẩm phổ thông, sai số ±10–20% tuỳ quán và cách nấu. Nhóm "sống" dùng khi cân trước khi nấu, nhóm "Đã nấu chín" dùng khi cân sau khi nấu — đừng lẫn hai nhóm. Món ăn ngoài là ước lượng cho một phần tiêu chuẩn. Đồ uống có cồn đã cộng calo từ cồn (7 kcal/g).</p>`;
+    el.dataset.built = "1";
+  }
+  const groups = ["Tất cả"].concat(customFoods().length ? ["Món của tôi"] : []).concat(G);
+  $("#grpChips").innerHTML = groups.map(g => `<button class="chip ${V.grp === g ? "on" : ""}" data-act="grp" data-v="${esc(g)}">${esc(g)}</button>`).join("");
+  renderLibList();
+  renderDock();
+}
+function norm(s){ return s.toLowerCase().normalize("NFD").replace(/[\u0300-\u036f]/g, "").replace(/đ/g, "d"); }
+function renderLibList(){
+  const q = norm(V.q.trim());
+  const all = customFoods().concat(FOODS);
+  const list = all.filter(f => (V.grp === "Tất cả" || f.g === V.grp) && (!q || norm(f.n).includes(q)));
+  let h = "", lastG = null;
+  if (!list.length) h = `<div class="empty">Không thấy món nào. Thử từ khác, hoặc bấm "Món tự nhập".</div>`;
+  list.forEach(f => {
+    if (f.g !== lastG && !q){ h += `<div class="lib-g">${esc(f.g)}</div>`; lastG = f.g; }
+    const m = macrosOf(f, f.def);
+    h += `<button class="food" data-act="open-food" data-v="${f.key}"><div class="food-m"><div class="food-n">${esc(f.n)}</div><div class="food-s">${esc(qtyLabel(f.u, f.def))} · P ${fmt(m.p, 0)}g · F ${fmt(m.f, 0)}g · C ${fmt(m.c, 0)}g</div></div><div class="food-k"><div class="v">${fmtK(m.k)}</div><div class="l">kcal</div></div></button>`;
+  });
+  $("#libList").innerHTML = h;
+}
+function renderDock(){
+  const show = V.tab === "lib" && $("#timer").hidden;
+  $("#dock").hidden = !show;
+  if (!show) return;
+  const t = totals(dayItems(todayISO())), tg = targetsFor(progWeek());
+  $("#dockIn").innerHTML = `Hôm nay <span class="n">${fmtK(t.k)}</span> / ${tg.kcal[1]} kcal · P <span class="n">${fmt(t.p, 0)}</span>g`;
+}
+
+/* ================= render: progress ================= */
+function chartSVG(map){
+  const keys = Object.keys(map).sort();
+  if (keys.length < 2) return "";
+  const W = 340, H = 170, pl = 34, pr = 8, pt = 10, pb = 24;
+  const t0 = parseISO(keys[0]).getTime(), t1 = parseISO(keys[keys.length - 1]).getTime(), span = Math.max(t1 - t0, 864e5);
+  const avgs = keys.map(k => avg7(k, map));
+  const all = keys.map(k => map[k]).concat(avgs.filter(v => v != null));
+  let lo = Math.min.apply(null, all), hi = Math.max.apply(null, all);
+  if (hi - lo < 2){ const mid = (hi + lo) / 2; lo = mid - 1; hi = mid + 1; }
+  lo -= .3; hi += .3;
+  const X = k => pl + (parseISO(k).getTime() - t0) / span * (W - pl - pr);
+  const Y = v => pt + (hi - v) / (hi - lo) * (H - pt - pb);
+  let path = "";
+  keys.forEach((k, i) => { if (avgs[i] != null) path += (path ? "L" : "M") + X(k).toFixed(1) + " " + Y(avgs[i]).toFixed(1); });
+  const dots = keys.map(k => `<circle cx="${X(k).toFixed(1)}" cy="${Y(map[k]).toFixed(1)}" r="2.6" fill="var(--muted)" opacity=".55"/>`).join("");
+  const grid = [hi - .3, (hi + lo) / 2, lo + .3].map(v => `<line x1="${pl}" x2="${W - pr}" y1="${Y(v)}" y2="${Y(v)}" stroke="var(--line)"/><text x="${pl - 6}" y="${Y(v) + 4}" text-anchor="end" font-size="11" fill="var(--muted)" font-family="var(--num)">${fmt(v)}</text>`).join("");
+  return `<svg class="chart" viewBox="0 0 ${W} ${H}" role="img" aria-label="Biểu đồ cân nặng">${grid}${dots}<path d="${path}" fill="none" stroke="var(--good)" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"/>
+    <text x="${pl}" y="${H - 6}" font-size="11" fill="var(--muted)">${ddmm(keys[0])}</text><text x="${W - pr}" y="${H - 6}" font-size="11" fill="var(--muted)" text-anchor="end">${ddmm(keys[keys.length - 1])}</text></svg>
+    <div class="track-cap" style="margin-top:4px"><span>● cân từng ngày</span><span style="color:var(--good)">— trung bình 7 ngày</span></div>`;
+}
+function renderProg(){
+  const el = $("#v-prog");
+  const wm = weights(), keys = Object.keys(wm).sort();
+  const la = keys.length ? avg7(keys[keys.length - 1], wm) : null;
+  const lost = la != null ? START_KG - la : 0;
+  const pct = Math.max(0, Math.min(100, lost / (START_KG - GOAL_KG) * 100));
+  let h = `<div class="hd"><div class="hd-l"><div class="hd-date">98 → 85 kg</div><div class="hd-title">Tiến độ</div></div></div>`;
+  h += `<section class="card"><div class="hero-v">${la != null ? fmt(lost) : "0"}<small> kg đã giảm</small></div>
+    <div class="track"><i style="width:${pct}%"></i></div>
+    <div class="track-cap"><span>98 kg</span><span>${la != null ? "TB hiện tại " + fmt(la) + " kg" : "chưa đủ dữ liệu"}</span><span>85 kg</span></div>
+    ${chartSVG(wm)}</section>`;
+
+  /* body composition */
+  const ib = inbody(), L = ib.length ? ib[ib.length - 1] : null;
+  h += `<section class="card"><div class="card-h"><h2>Thành phần cơ thể</h2><span class="aside">InBody</span></div>`;
+  if (L){
+    const fm = L.w * L.bf / 100, lean = L.w - fm;
+    const bf85 = Math.max(0, (GOAL_KG - lean) / GOAL_KG * 100), w15 = lean / 0.85;
+    const F = ib[0], dFat = F !== L ? fm - F.w * F.bf / 100 : null, dLean = F !== L ? lean - (F.w - F.w * F.bf / 100) : null;
+    h += `<div class="w-stats" style="margin-top:0">
+      <div class="w-stat"><div class="v">${fmt(L.bf)}%</div><div class="l">mỡ · ${ddmm(L.d)}</div></div>
+      <div class="w-stat"><div class="v">${fmt(fm)}</div><div class="l">kg mỡ${dFat != null ? ` · <span style="color:${dFat <= 0 ? "var(--good)" : "var(--bad)"}">${dFat <= 0 ? "↓" : "↑"}${fmt(Math.abs(dFat))}</span>` : ""}</div></div>
+      <div class="w-stat"><div class="v">${fmt(lean)}</div><div class="l">kg khối nạc${dLean != null ? ` · ${dLean >= 0 ? "↑" : "↓"}${fmt(Math.abs(dLean))}` : ""}</div></div>
+      ${L.smm ? `<div class="w-stat"><div class="v">${fmt(L.smm)}</div><div class="l">kg cơ xương</div></div>` : ""}
+    </div>
+    <div class="proj">Nếu giữ được khối nạc: ở <b>85 kg</b> bạn khoảng <b>${fmt(bf85)}%</b> mỡ. Để xuống khoảng <b>15%</b> mỡ cần về khoảng <b>${fmt(w15)} kg</b>.</div>`;
+    h += `<div class="note ${L.bf >= 25 ? "good" : "plain"}">${L.bf >= 25 ? "Mỡ trên 25%: app đang ưu tiên giảm mỡ — tốc độ mục tiêu 0,7–1,2%/tuần, khuyên dùng PPL." : "Mỡ dưới 25%: app chuyển về tốc độ 0,5–1%/tuần để giữ cơ tốt hơn."}</div>`;
+  } else {
+    h += `<div class="empty">Nhập kết quả InBody để app tính khối nạc, % mỡ dự kiến ở 85kg và chỉnh tốc độ giảm cân phù hợp.</div>`;
+  }
+  h += `<div class="lbl">Thêm lần đo</div>
+    <div class="ib-f"><input type="date" id="ibD" value="${todayISO()}" class="full" aria-label="Ngày đo"><input id="ibW" inputmode="decimal" placeholder="Cân (kg)"><input id="ibB" inputmode="decimal" placeholder="% mỡ"><input id="ibS" inputmode="decimal" placeholder="Cơ xương kg (tùy chọn)" class="full"></div>
+    <div class="btn-row"><button class="btn primary" data-act="ib-save">Lưu kết quả</button></div>`;
+  if (ib.length) h += ib.slice().reverse().map(e => `<div class="row"><span class="grow">${ddmm(e.d)} · ${fmt(e.w)} kg</span><span class="v">${fmt(e.bf)}%</span><button class="x" data-act="ib-del" data-v="${e.id}" aria-label="Xoá">×</button></div>`).join("");
+  h += `<p class="muted" style="font-size:12px;margin:10px 0 0">Đo buổi sáng, chưa ăn, sau vệ sinh, không tập trước đó; 4 tuần một lần. 2–3 tuần đầu máy có thể báo "mất cơ" do mất nước và glycogen — nhìn xu hướng qua nhiều lần đo.</p></section>`;
+
+  /* weekly averages */
+  const sd = startDate();
+  const buckets = {};
+  keys.forEach(k => { const m = iso(mondayOf(parseISO(k))); (buckets[m] = buckets[m] || []).push(wm[k]); });
+  const bk = Object.keys(buckets).sort().reverse();
+  if (bk.length){
+    h += `<section class="card"><div class="card-h"><h2>Trung bình từng tuần</h2></div>`;
+    bk.forEach((m, i) => {
+      const arr = buckets[m], av = arr.reduce((s, v) => s + v, 0) / arr.length;
+      const prevM = bk[i + 1], pav = prevM ? buckets[prevM].reduce((s, v) => s + v, 0) / buckets[prevM].length : null;
+      const label = sd ? "Tuần " + (Math.floor((parseISO(m) - mondayOf(parseISO(sd))) / (7 * 864e5)) + 1) : "Từ " + ddmm(m);
+      const d = pav != null ? av - pav : null;
+      h += `<div class="row"><span class="grow">${label} <span class="muted" style="font-size:13px">· ${arr.length} lần cân</span></span><span class="v">${fmt(av)}</span><span class="s" style="color:${d == null ? "var(--muted)" : d < 0 ? "var(--good)" : "var(--bad)"}">${d == null ? "" : (d < 0 ? "↓" : "↑") + fmt(Math.abs(d))}</span></div>`;
+    });
+    h += `<div class="note plain">Hai tuần liền trung bình không giảm → cắt thêm 100–150 kcal/ngày hoặc đi bộ thêm 15–20 phút. Không cắt mạnh hơn.</div></section>`;
+  }
+
+  /* lifts */
+  let lifts = "";
+  ALL_SESSIONS.forEach(p => {
+    let rows = "";
+    p.ex.forEach((e, i) => {
+      let first = null, last = null;
+      for (let w = 3; w <= WEEKS; w++){ const d = get(logId(p.id, w)); if (d && d.s && d.s[i] && typeof d.s[i].kg === "number"){ if (!first) first = {w, kg:d.s[i].kg}; last = {w, kg:d.s[i].kg}; } }
+      if (!first) return;
+      const d = r1(last.kg - first.kg);
+      rows += `<div class="row"><span class="grow">${e[0]}</span><span class="s">${fmt(first.kg)}</span><span class="v">${fmt(last.kg)}</span><span class="s" style="color:${d > 0 ? "var(--good)" : d < 0 ? "var(--bad)" : "var(--muted)"}">${d > 0 ? "+" : ""}${fmt(d)}</span></div>`;
+    });
+    if (rows) lifts += `<div class="lift-g">${p.label}</div>` + rows;
+  });
+  h += `<section class="card"><div class="card-h"><h2>Mức tạ</h2><span class="aside">tuần 3 → mới nhất</span></div>${lifts || '<div class="empty">Chưa có mức tạ từ tuần 3 trở đi. Tuần 1–2 là khớp lại nhịp nên không tính.</div>'}
+    ${lifts ? '<div class="note plain">Tuần 3–10: tạ tăng dần là kỳ vọng hợp lý với lượng mỡ hiện tại. Tuần 11–15: đứng yên là bình thường.</div>' : ""}</section>`;
+
+  /* history */
+  if (keys.length){
+    h += `<section class="card"><div class="card-h"><h2>Lịch sử cân</h2><span class="aside">${keys.length} lần</span></div>` +
+      keys.slice(-30).reverse().map(k => `<div class="row"><span class="grow">${DAYS[parseISO(k).getDay()]} · ${ddmm(k)}</span><span class="v">${fmt(wm[k])}</span><button class="x" data-act="w-del" data-v="${k}" aria-label="Xoá">×</button></div>`).join("") + `</section>`;
+  }
+  el.innerHTML = h;
+}
+
+/* ================= render: plan ================= */
+function renderPlan(){
+  const el = $("#v-plan");
+  const sd = startDate();
+  const det = (t, body, open, id) => `<details${id ? ` id="${id}"` : ""}${open ? " open" : ""}><summary>${t}</summary><div class="dbody">${body}</div></details>`;
+  const P = prog(), pk = progKey(), ss = P.sessions;
+  let h = `<div class="hd"><div class="hd-l"><div class="hd-date">${P.name} — 6 ngày</div><div class="hd-title">Kế hoạch</div></div></div>`;
+  h += `<div class="pgs">` + Object.keys(PROGRAMS).map(k => { const x = PROGRAMS[k]; return `<button class="pg ${k === pk ? "on" : ""}" data-act="prog-set" data-v="${k}">${k === pk ? '<span class="tag">ĐANG DÙNG</span>' : (k === "ppl" && fatHigh() ? '<span class="tag">KHUYÊN DÙNG</span>' : "")}<b>${x.name}</b><span class="s">${x.desc}</span></button>`; }).join("") + `</div>`;
+  if (fatHigh()) h += `<div class="note good"><b>Đang ưu tiên giảm mỡ</b> (InBody ${fmt(latestBF().bf)}% mỡ). Tốc độ mục tiêu 0,7–1,2%/tuần, tuần 3–10 cố tăng tạ, bước chân 10.000+ mỗi ngày.${pk === "upper" ? " Khuyên chuyển sang PPL cho tới khi mỡ xuống khoảng 22%." : ""}</div>`;
+  if (pk === "upper") h += `<div class="note">Chân vẫn tập 2 buổi, khoảng 9–10 set mỗi nhóm/tuần — đủ để giữ cơ chân khi đang cắt calo. Đừng bỏ hẳn chân: squat và deadlift là hai bài tiêu hao năng lượng nhiều nhất.</div>`;
+  h += det("Chiến lược theo nghiên cứu", RESEARCH.map(r => `<div class="rs"><h4>${r[0]}</h4><p>${r[1]}</p><div class="src">${r[2]}</div></div>`).join("") + `<p class="muted" style="font-size:12px;margin:8px 0 0">Tóm tắt hướng dẫn chung từ nghiên cứu trên người khỏe mạnh, không thay cho tư vấn y tế.</p>`, V.openSec === "research", "sec-research");
+
+  h += det("Lịch tuần", ss.map(p => `<div class="kv"><span><b>${DAYS[p.wd]}</b> · ${p.label}</span><span>${p.cardio.replace("Đi bộ dốc ", "dốc ")}</span></div>`).join("") + `<div class="kv"><span><b>Chủ nhật</b></span><span>Nghỉ hoàn toàn</span></div><p style="margin-top:10px" class="muted">Khởi động 8 phút: 5 phút máy chạy nhẹ → xoay khớp → set khởi động bài chính (thanh không ×10 → 50% ×5 → 70% ×3 → 85% ×1).</p>`, true);
+
+  ss.forEach(p => {
+    h += det(`${p.label} <span class="muted" style="font-weight:500">· ${p.focus}</span>`, p.ex.map((e, i) => `<div class="pl-ex"><span class="ex-no">${i + 1}</span><span><b>${e[0]}</b><br><span class="muted" style="font-size:13px">${e[1]}</span></span><span class="s">${e[2]}</span></div>`).join(""));
+  });
+
+  h += det("Số set mỗi tuần", P.weekly.map(r => `<div class="kv"><span>${r[0]}</span><span>${r[1]} set</span></div>`).join("") + `<p class="muted" style="margin-top:10px">Chỉ tính set trực tiếp. Bài compound còn tập gián tiếp thêm nhóm khác, ví dụ đẩy ngực cũng tập tay sau.</p>`);
+  h += det("Tuần 1–2 · khớp lại nhịp", `<ul><li>Tuần 1: ${ss.slice(0, 4).map(x => x.label).join(" · ")}</li><li>Tuần 2: thêm ${ss[4].label}</li><li>Tuần 3 trở đi: đủ 6 buổi</li></ul><p>Giảm tạ 10–20% so với đỉnh cũ, dừng set khi còn dư 3–4 rep. Bỏ Trap Bar Deadlift, thay bằng Romanian Deadlift nhẹ.</p>`);
+  h += det("Tăng tiến", `<ul><li>Set chính dừng khi còn dư 1–2 rep (RPE 8)</li><li>Đủ rep cận trên ở mọi set → buổi sau +2,5kg thân trên / +5kg thân dưới, quay về cận dưới</li><li>Bài isolation cuối buổi: giữ nguyên tạ, chỉ cần đủ rep với form sạch</li></ul><p class="muted">Ví dụ Bench 4×6–8: làm được 8/8/8/8 → +2,5kg → tuần sau còn 6/6/6/6, đó là đúng.</p><p>Tuần 3–10: kỳ vọng tạ tăng dần, vì mỡ còn nhiều và cơ đang nhớ lại. Tuần 11–15: giữ được tạ là đủ.</p>`);
+  h += det("Deload · tuần 8 hoặc 9", `<ul><li>Về 4 buổi: ${ss.slice(0, 4).map(x => x.label).join(" · ")}</li><li>Chỉ bài 1–6, giữ tạ, cắt nửa số set</li><li>Cardio 20 phút mỗi buổi</li><li>Ăn mức duy trì ~2.800–3.000 kcal</li></ul>`);
+  h += det("Khi đuối · thứ tự lùi", `<p>Mỗi lần một bước, giữ 1 tuần rồi đánh giá:</p><ul><li><b>1.</b> Cardio còn 15 phút/buổi</li><li><b>2.</b> ${P.trim}</li><li><b>3.</b> ${P.drop}</li><li><b>4.</b> Deload sớm + tăng 150–200 kcal, ưu tiên carb</li></ul><p>Đau khớp nhói → dừng bài đó, đổi biến thể máy. Nhỡ buổi → bỏ luôn, không dồn hai buổi một ngày.</p>`);
+  h += det("Dinh dưỡng", `<div class="kv"><span>Tuần 1–2</span><span>2.200–2.400 kcal</span></div><div class="kv"><span>Tuần 3–15</span><span>1.900–2.100 kcal</span></div><div class="kv"><span>Protein</span><span>170–190g</span></div><div class="kv"><span>Fat</span><span>55–65g</span></div><div class="kv"><span>Carb</span><span>phần còn lại</span></div><div class="kv"><span>3 bữa mẫu cộng lại</span><span>~1.940 kcal · P 180g</span></div>
+    <p style="margin-top:12px"><b>Cân lúc sống thì chọn nhóm "Thịt & cá (sống)", cân sau khi nấu thì chọn "Đã nấu chín".</b> Thịt nấu chín mất nước, nặng ít hơn lúc sống khoảng 25–30%: 220g ức gà sống còn khoảng 160g khi chín.</p>
+    <p>Ngày tập chân thêm 60g cơm. Ăn ngoài một bữa thì cắt tinh bột ở bữa còn lại, không cắt protein.</p>
+    <p><b>Ước lượng bằng mắt:</b></p><ul><li>220g ức gà sống ≈ miếng lớn hơn lòng bàn tay một chút, dày 2,5cm</li><li>250g cá phi lê sống ≈ 2 lòng bàn tay</li><li>160g cơm chín ≈ 1 bát đầy vun nhẹ</li><li>10g dầu ≈ 2 thìa cà phê</li><li>50g yến mạch ≈ nửa bát</li></ul>`);
+
+  /* settings */
+  h += det("Cài đặt & dữ liệu", `
+    <div class="lbl">Ngày bắt đầu tuần 1</div>
+    <input type="date" class="date-in" id="sdIn2" value="${sd || todayISO()}">
+    <div class="btn-row"><button class="btn" data-act="set-start2">Lưu ngày bắt đầu</button></div>
+    <div class="kv" style="margin-top:12px"><span>Lưu trữ</span><span id="syncTxt"></span></div>
+    <div class="btn-row"><button class="btn primary" data-act="export">Sao lưu ra file</button><button class="btn" data-act="import-file">Khôi phục từ file</button></div>
+    <input type="file" id="impFile" accept=".json,application/json" hidden>
+    <p class="muted" style="font-size:13px;margin:10px 0 0">Dữ liệu nằm trong iPhone này. Xoá biểu tượng app là mất dữ liệu — sao lưu 2 tuần một lần, chọn "Lưu vào Tệp" và để file trong iCloud Drive.</p>
+    <div class="lbl" style="margin-top:16px">Hoặc dán nội dung bản sao lưu</div>
+    <textarea class="imp" id="impIn" placeholder='{"app":"ppl15","docs":{…}}'></textarea>
+    <div class="btn-row"><button class="btn" data-act="import">Khôi phục từ nội dung dán</button></div>
+    <div class="btn-row"><button class="btn danger ghost" data-act="reset" id="resetBtn">Xoá toàn bộ dữ liệu</button></div>`);
+  el.innerHTML = h;
+  renderSync();
+}
+
+function renderSync(){
+  const tag = $("#syncTag"), txt = $("#syncTxt"), s = get("settings") || {};
+  if (tag){ tag.className = "sync on"; tag.innerHTML = "<i></i>Đã lưu trên máy"; }
+  if (txt) txt.textContent = "Trên iPhone này · " + (s.lastBackup ? "sao lưu " + ddmm(s.lastBackup) : "chưa sao lưu");
+}
+function daysSince(iso2){ return Math.floor((parseISO(todayISO()) - parseISO(iso2)) / 864e5); }
+function needBackup(){
+  const s = get("settings") || {}, n = Object.keys(S.docs).length;
+  if (n < 4) return false;
+  return !s.lastBackup || daysSince(s.lastBackup) >= 14;
+}
+
+/* ================= render dispatch ================= */
+function render(){
+  ["today","lib","prog","plan"].forEach(t => { $("#v-" + t).hidden = t !== V.tab; });
+  document.querySelectorAll("#tabs button").forEach(b => b.classList.toggle("on", b.dataset.v === V.tab));
+  if (V.tab === "today") renderToday();
+  if (V.tab === "lib") renderLib();
+  if (V.tab === "prog") renderProg();
+  if (V.tab === "plan") renderPlan();
+  renderDock();
+}
+
+/* ================= sheet ================= */
+let SH = null;
+function openSheet(html){ $("#sheetIn").innerHTML = `<div class="grab"></div>` + html; $("#scrim").classList.add("on"); $("#sheet").classList.add("on"); }
+function closeSheet(){ $("#scrim").classList.remove("on"); $("#sheet").classList.remove("on"); SH = null; }
+
+function openFood(key){
+  const f = findFood(key); if (!f) return;
+  SH = {type:"food", key, q:f.def, meal:V.libMeal || defaultMeal()};
+  drawFood();
+}
+function drawFood(){
+  const f = findFood(SH.key); if (!f) return closeSheet();
+  const m = macrosOf(f, SH.q);
+  const mass = isMass(f.u);
+  const quick = mass ? [0.5, 1, 1.5, 2].map(x => Math.round(f.def * x)) : [0.5, 1, 2, 3];
+  openSheet(`<div class="sh-t">${esc(f.n)}</div><div class="sh-s">${esc(f.g)} · ${mass ? "tính theo " + (f.u === "ml" ? "ml" : "gram") : "tính theo " + esc(f.u)}</div>
+    <div class="qty"><button data-act="q" data-v="-1" aria-label="Bớt">−</button><input id="qtyIn" data-in="qty" inputmode="decimal" value="${fmt(SH.q, mass ? 0 : 1)}" aria-label="Số lượng"><span class="u">${mass ? (f.u === "ml" ? "ml" : "g") : esc(f.u)}</span><button data-act="q" data-v="1" aria-label="Thêm">+</button></div>
+    <div class="chips">${quick.map(v => `<button class="chip ${v === SH.q ? "on" : ""}" data-act="qset" data-v="${v}">${qtyLabel(f.u, v)}</button>`).join("")}</div>
+    <div class="prev" id="prevBox"><div><div class="v">${fmtK(m.k)}</div><div class="l">kcal</div></div><div><div class="v">${fmt(m.p, 0)}</div><div class="l">protein</div></div><div><div class="v">${fmt(m.f, 0)}</div><div class="l">fat</div></div><div><div class="v">${fmt(m.c, 0)}</div><div class="l">carb</div></div></div>
+    <div class="lbl">Bữa</div><div class="chips">${MEALS.map(x => `<button class="chip ${x === SH.meal ? "on" : ""}" data-act="meal" data-v="${x}">${x}</button>`).join("")}</div>
+    <div class="btn-row"><button class="btn primary block" data-act="add-food">Thêm vào hôm nay</button></div>
+    ${f.key[0] === "c" ? `<div class="btn-row"><button class="btn danger ghost block" data-act="del-food">Xoá món này khỏi thư viện</button></div>` : ""}`);
+}
+function updatePrev(){
+  const f = findFood(SH.key); const m = macrosOf(f, SH.q);
+  const vs = $("#prevBox").querySelectorAll(".v");
+  vs[0].textContent = fmtK(m.k); vs[1].textContent = fmt(m.p, 0); vs[2].textContent = fmt(m.f, 0); vs[3].textContent = fmt(m.c, 0);
+}
+function openNewFood(){
+  SH = {type:"new"};
+  openSheet(`<div class="sh-t">Món tự nhập</div><div class="sh-s">Lưu vào thư viện để dùng lại. Xem calo trên bao bì hoặc ước lượng.</div>
+    <div class="f1"><div class="lbl">Tên món</div><input id="nfN" placeholder="VD: Bánh bao nhân thịt"></div>
+    <div class="f1"><div class="lbl">Đơn vị (1 phần là gì)</div><input id="nfU" placeholder="VD: cái, ly, gói, phần" value="phần"></div>
+    <div class="lbl">Cho 1 đơn vị</div>
+    <div class="f2"><input id="nfK" inputmode="decimal" placeholder="kcal *"><input id="nfP" inputmode="decimal" placeholder="Protein g"><input id="nfF" inputmode="decimal" placeholder="Fat g"><input id="nfC" inputmode="decimal" placeholder="Carb g"></div>
+    <div class="btn-row"><button class="btn primary block" data-act="save-food">Lưu món</button></div>`);
+}
+
+/* ================= actions ================= */
+let toastT;
+function toast(msg){ const t = $("#toast"); t.textContent = msg; t.classList.add("on"); clearTimeout(toastT); toastT = setTimeout(() => t.classList.remove("on"), 1900); }
+
+function addItems(list){
+  const key = "day_" + todayISO();
+  const d = clone(get(key)) || {items:[]};
+  d.items = (d.items || []).concat(list);
+  put(key, d);
+}
+
+const T = {end:0, iv:null, done:false, lock:null};
+function wake(on){
+  try {
+    if (on && "wakeLock" in navigator && !T.lock) navigator.wakeLock.request("screen").then(l => { T.lock = l; }).catch(() => {});
+    if (!on && T.lock){ T.lock.release(); T.lock = null; }
+  } catch(e) {}
+}
+document.addEventListener("visibilitychange", () => { if (!document.hidden && T.iv){ T.lock = null; wake(true); tick(); } });
+let audioCtx = null;
+function beep(){ try { if (!audioCtx) return; const o = audioCtx.createOscillator(), g = audioCtx.createGain(); o.frequency.value = 880; g.gain.value = .15; o.connect(g); g.connect(audioCtx.destination); o.start(); o.stop(audioCtx.currentTime + .35); } catch(e) {} }
+function tick(){
+  const left = (T.end - Date.now()) / 1000;
+  if (left <= 0){
+    if (!T.done){
+      T.done = true; $("#tV").textContent = "0:00"; $("#tLab").textContent = "Vào set tiếp"; $("#timer").classList.add("done");
+      try { if (navigator.vibrate) navigator.vibrate([200, 100, 200]); } catch(e) {}
+      beep(); setTimeout(() => { if (T.done) stopRest(); }, 6000);
+    }
+    return;
+  }
+  $("#tV").textContent = mmss(Math.ceil(left));
+}
+function startRest(sec){
+  try { audioCtx = audioCtx || new (window.AudioContext || window.webkitAudioContext)(); } catch(e) {}
+  T.end = Date.now() + sec * 1000; T.done = false;
+  $("#timer").hidden = false; $("#timer").classList.remove("done"); $("#tLab").textContent = "Nghỉ";
+  clearInterval(T.iv); T.iv = setInterval(tick, 250); tick(); wake(true); renderDock();
+}
+function stopRest(){ clearInterval(T.iv); T.iv = null; T.done = false; $("#timer").hidden = true; wake(false); renderDock(); }
+
+let resetArm = 0;
+const ACTS = {
+  rest: v => startRest(Number(v)),
+  "ib-save": () => {
+    const d = $("#ibD").value, w = num($("#ibW").value), bf = num($("#ibB").value), smm = num($("#ibS").value);
+    if (!d) return toast("Chọn ngày đo");
+    if (w == null || w < 30 || w > 300) return toast("Nhập cân nặng lúc đo");
+    if (bf == null || bf < 3 || bf > 60) return toast("Nhập % mỡ hợp lệ");
+    const doc = clone(get("inbody")) || {entries:[]};
+    doc.entries = (doc.entries || []).filter(e => e.d !== d).concat([{id:rid(), d, w:r1(w), bf:r1(bf), smm:smm != null ? r1(smm) : null}]);
+    put("inbody", doc); render(); toast("Đã lưu kết quả InBody");
+  },
+  "ib-del": id => { const doc = clone(get("inbody")) || {entries:[]}; doc.entries = doc.entries.filter(e => e.id !== id); put("inbody", doc); render(); },
+  "t-add": () => { if (T.done){ T.done = false; T.end = Date.now() + 30000; $("#timer").classList.remove("done"); $("#tLab").textContent = "Nghỉ"; } else T.end += 30000; tick(); },
+  "t-stop": () => stopRest(),
+  sleep: v => { const key = "day_" + todayISO(); const d = clone(get(key)) || {items:[]}; d.sleep = d.sleep === v ? null : v; put(key, d); render(); },
+  "go-research": () => { V.openSec = "research"; ACTS.tab("plan"); const el = document.getElementById("sec-research"); if (el && el.scrollIntoView) el.scrollIntoView({block:"start"}); V.openSec = null; },
+  tab: v => { V.tab = v; if (v !== "today") { V.week = null; } closeSheet(); render(); window.scrollTo(0, 0); },
+  "set-start": () => { const v = $("#sdIn").value; if (!v) return toast("Chọn ngày trước"); put("settings", Object.assign({}, get("settings"), {startDate:v})); V.week = null; render(); toast("Đã đặt ngày bắt đầu"); },
+  "set-start2": () => { const v = $("#sdIn2").value; if (!v) return; put("settings", Object.assign({}, get("settings"), {startDate:v})); toast("Đã lưu ngày bắt đầu"); },
+  "w-save": () => {
+    const n = num($("#wIn").value);
+    if (n == null || n < 30 || n > 300) return toast("Nhập số cân hợp lệ");
+    const w = clone(get("weights")) || {map:{}}; w.map = w.map || {}; w.map[todayISO()] = r1(n);
+    put("weights", w); $("#wIn").blur(); render(); toast("Đã lưu " + fmt(n) + " kg");
+  },
+  "w-del": k => { const w = clone(get("weights")) || {map:{}}; delete w.map[k]; put("weights", w); render(); },
+  wk: v => { V.week = Math.max(1, Math.min(WEEKS, CTX.week + Number(v))); render(); },
+  pick: v => { V.wid = v; render(); },
+  copy: i => {
+    const pv = prevOf(CTX.wid, Number(i), CTX.week); if (!pv) return;
+    const kg = document.querySelector(`[data-in="ex"][data-i="${i}"][data-k="kg"]`), rp = document.querySelector(`[data-in="ex"][data-i="${i}"][data-k="r"]`);
+    kg.value = fmt(pv.kg); onEx(kg);
+    if (pv.r != null){ rp.value = pv.r; onEx(rp); }
+  },
+  rm: id => { const key = "day_" + todayISO(); const d = clone(get(key)) || {items:[]}; d.items = d.items.filter(x => x.id !== id); put(key, d); render(); },
+  "go-lib": () => { V.libMeal = defaultMeal(); ACTS.tab("lib"); setTimeout(() => { const q = $("#qIn"); if (q) q.focus(); }, 80); },
+  tpl: m => {
+    addItems(TEMPLATES[m].map(x => ({id:rid(), n:x[0], qt:x[1], m, p:x[2], f:x[3], c:x[4], k:kc(x[2], x[3], x[4])})));
+    render(); toast("Đã thêm bữa " + m.toLowerCase());
+  },
+  grp: v => { V.grp = v; renderLib(); },
+  "open-food": k => openFood(k),
+  q: v => {
+    const f = findFood(SH.key); const step = isMass(f.u) ? (f.def >= 100 ? 10 : 5) : 0.5;
+    SH.q = Math.max(step, r1(SH.q + Number(v) * step)); $("#qtyIn").value = fmt(SH.q, isMass(f.u) ? 0 : 1); updatePrev();
+    document.querySelectorAll('[data-act="qset"]').forEach(b => b.classList.toggle("on", Number(b.dataset.v) === SH.q));
+  },
+  qset: v => { SH.q = Number(v); drawFood(); },
+  meal: v => { SH.meal = v; V.libMeal = v; document.querySelectorAll('[data-act="meal"]').forEach(b => b.classList.toggle("on", b.dataset.v === v)); },
+  "add-food": () => {
+    const f = findFood(SH.key); if (!f || !(SH.q > 0)) return;
+    const m = macrosOf(f, SH.q);
+    addItems([{id:rid(), n:f.n, qt:qtyLabel(f.u, SH.q), m:SH.meal, p:r1(m.p), f:r1(m.f), c:r1(m.c), k:Math.round(m.k)}]);
+    closeSheet(); renderDock(); toast("Đã thêm " + f.n);
+  },
+  "new-food": () => openNewFood(),
+  "save-food": () => {
+    const n = $("#nfN").value.trim(), u = $("#nfU").value.trim() || "phần", k = num($("#nfK").value);
+    if (!n) return toast("Nhập tên món");
+    if (k == null || k < 0) return toast("Nhập số kcal");
+    const d = clone(get("foods")) || {custom:[]};
+    d.custom = (d.custom || []).concat([{id:rid(), n, u, k, p:num($("#nfP").value) || 0, f:num($("#nfF").value) || 0, c:num($("#nfC").value) || 0}]);
+    put("foods", d); closeSheet(); V.grp = "Món của tôi"; V.q = ""; const qi = $("#qIn"); if (qi) qi.value = ""; renderLib(); toast("Đã lưu " + n);
+  },
+  "del-food": () => { const id = SH.key.slice(1); const d = clone(get("foods")) || {custom:[]}; d.custom = d.custom.filter(x => x.id !== id); put("foods", d); closeSheet(); if (!d.custom.length) V.grp = "Tất cả"; renderLib(); },
+  "prog-set": v => { if (!PROGRAMS[v] || v === progKey()) return; put("settings", Object.assign({}, get("settings"), {program:v})); V.wid = undefined; render(); toast("Đã chuyển sang " + PROGRAMS[v].name); },
+  close: () => closeSheet(),
+  export: async () => {
+    const data = JSON.stringify({app:"ppl15", exportedAt:new Date().toISOString(), docs:S.docs}, null, 1);
+    const name = "giam-can-15-tuan-" + todayISO() + ".json";
+    const mark = () => { put("settings", Object.assign({}, get("settings"), {lastBackup:todayISO()})); render(); toast("Đã tạo bản sao lưu"); };
+    try {
+      const file = new File([data], name, {type:"application/json"});
+      if (navigator.canShare && navigator.canShare({files:[file]})){ await navigator.share({files:[file], title:"Sao lưu giảm cân 15 tuần"}); mark(); return; }
+    } catch(e){ if (e && e.name === "AbortError") return; }
+    try {
+      const url = URL.createObjectURL(new Blob([data], {type:"application/json"}));
+      const a = document.createElement("a"); a.href = url; a.download = name; document.body.appendChild(a); a.click(); a.remove();
+      setTimeout(() => URL.revokeObjectURL(url), 5000); mark(); return;
+    } catch(e) {}
+    if (V.tab !== "plan"){ V.tab = "plan"; render(); }
+    const t = $("#impIn"); if (t){ t.value = data; t.select(); } toast("Không lưu được file — nội dung sao lưu đã hiện trong ô dán để bạn sao chép");
+  },
+  "import-file": () => { const f = $("#impFile"); if (f) f.click(); },
+  import: (txt) => {
+    const src = typeof txt === "string" && txt.trim().startsWith("{") ? txt : $("#impIn").value;
+    let o; try { o = JSON.parse(src); } catch(e) { return toast("Dữ liệu không đúng định dạng"); }
+    let n = 0;
+    if (o && o.docs){ Object.keys(o.docs).forEach(id => { put(id, o.docs[id]); n++; }); }
+    else if (o && (o.logs || o.weights)){
+      Object.keys(o.logs || {}).forEach(k => {
+        const [wid, w] = k.split("|"); if (!planOf(wid)) return;
+        const s = {}; Object.keys(o.logs[k]).forEach(i => { const e = o.logs[k][i]; s[i] = {}; if (typeof e.kg === "number") s[i].kg = e.kg; if (typeof e.r === "number") s[i].r = e.r; });
+        put(logId(wid, Number(w)), {s, note:(o.notes && o.notes[k]) || ""}); n++;
+      });
+      if (o.weights){ const w = clone(get("weights")) || {map:{}}; w.map = Object.assign(w.map || {}, o.weights); put("weights", w); n++; }
+    }
+    const ii = $("#impIn"); if (ii) ii.value = ""; render(); toast(n ? "Đã khôi phục dữ liệu" : "Không tìm thấy dữ liệu để khôi phục");
+  },
+  reset: async () => {
+    const b = $("#resetBtn");
+    if (Date.now() - resetArm > 4000){ resetArm = Date.now(); b.textContent = "Chạm lần nữa để xoá vĩnh viễn"; return; }
+    const ids = Object.keys(S.docs);
+    S.docs = {}; S.pending = {}; lsSave();
+    if (S.col){ for (const id of ids){ try { await S.col.doc(id).delete(); } catch(e) {} } }
+    V.week = null; V.wid = undefined; render(); toast("Đã xoá toàn bộ dữ liệu");
+  }
+};
+
+document.addEventListener("click", e => {
+  const b = e.target.closest("[data-act]"); if (!b) return;
+  const fn = ACTS[b.dataset.act]; if (fn) fn(b.dataset.v != null ? b.dataset.v : b.dataset.i);
+});
+
+function onEx(inp){
+  const i = inp.dataset.i, k = inp.dataset.k, id = logId(CTX.wid, CTX.week);
+  const d = clone(get(id)) || {s:{}, note:""};
+  d.s = d.s || {};
+  const e = Object.assign({}, d.s[i] || {});
+  const raw = inp.value.trim();
+  if (raw === "") delete e[k]; else { const n = num(raw); if (n == null) return; e[k] = n; }
+  if (Object.keys(e).length) d.s[i] = e; else delete d.s[i];
+  if (!d.d) d.d = todayISO();
+  put(id, d);
+  if (k === "kg"){
+    const pv = prevOf(CTX.wid, Number(i), CTX.week), el = $("#d" + i);
+    if (!el) return;
+    el.className = "delta";
+    if (pv && typeof e.kg === "number"){ const df = r1(e.kg - pv.kg); el.textContent = (df > 0 ? "+" : "") + fmt(df); if (df) el.classList.add(df > 0 ? "up" : "down"); el.classList.add("pop"); setTimeout(() => el.classList.remove("pop"), 420); }
+    else el.textContent = "—";
+  }
+  const chip = document.querySelector(`[data-act="pick"][data-v="${CTX.wid}"]`);
+  if (chip && !chip.querySelector(".dot")) chip.insertAdjacentHTML("beforeend", '<span class="dot"></span>');
+}
+
+document.addEventListener("input", e => {
+  const t = e.target, k = t.dataset && t.dataset.in;
+  if (!k) return;
+  if (k === "ex") onEx(t);
+  else if (k === "note"){ const id = logId(CTX.wid, CTX.week); const d = clone(get(id)) || {s:{}}; d.note = t.value; if (!d.d) d.d = todayISO(); put(id, d); }
+  else if (k === "steps"){
+    const raw = t.value.replace(/[^0-9]/g, ""), n = raw ? parseInt(raw, 10) : null;
+    const key = "day_" + todayISO(), d = clone(get(key)) || {items:[]};
+    if (n == null) delete d.steps; else d.steps = n;
+    put(key, d);
+    const bar = $("#stBar"), cap = $("#stCap");
+    if (bar) bar.style.width = Math.min(100, (n || 0) / 120) + "%";
+    if (cap) cap.textContent = stepsCap(n);
+  }
+  else if (k === "q"){ V.q = t.value; renderLibList(); }
+  else if (k === "qty"){ const n = num(t.value); if (n != null && n > 0){ SH.q = n; updatePrev(); } }
+});
+document.addEventListener("change", e => {
+  const t = e.target;
+  if (t && t.id === "impFile" && t.files && t.files[0]){
+    const r = new FileReader();
+    r.onload = () => ACTS.import(String(r.result));
+    r.readAsText(t.files[0]);
+    t.value = "";
+  }
+});
+document.addEventListener("keydown", e => {
+  if (e.key === "Enter" && e.target.id === "wIn"){ e.preventDefault(); ACTS["w-save"](); }
+  if (e.key === "Escape") closeSheet();
+});
+
+/* ================= boot ================= */
+lsLoad();
+render();
+(function initLocal(){
+  try { if (navigator.storage && navigator.storage.persist) navigator.storage.persist(); } catch(e) {}
+  try { if ("serviceWorker" in navigator && location.protocol === "https:") navigator.serviceWorker.register("sw.js").catch(() => {}); } catch(e) {}
+  renderSync();
+})();
+})();
+</script>
+</body>
+</html>

@@ -1,0 +1,18 @@
+APP GIẢM CÂN 15 TUẦN — CÀI LÊN IPHONE (KHÔNG CẦN MAC)
+
+1. Tạo tài khoản GitHub miễn phí tại github.com (nếu chưa có).
+2. Bấm "+" → New repository → đặt tên: ppl15 → chọn Public → Create.
+3. Trong repo: Add file → Upload files → chọn 6 file:
+   index.html, sw.js, manifest.webmanifest, icon-180.png, icon-192.png, icon-512.png
+   → Commit changes. (KHÔNG cần upload file HUONG-DAN.txt này.)
+4. Settings → Pages → Branch: main, thư mục / (root) → Save.
+   Chờ 1–2 phút, link sẽ là: https://TÊN-GITHUB.github.io/ppl15/
+5. Mở link bằng SAFARI → nút Chia sẻ → "Thêm vào MH chính" → Thêm.
+6. Chuyển dữ liệu cũ: mở app cũ (link claude.ai) → Kế hoạch → Cài đặt & dữ liệu
+   → "Tải bản sao lưu" → Lưu vào Tệp. Mở app mới → Kế hoạch → Cài đặt & dữ liệu
+   → "Khôi phục từ file" → chọn file vừa lưu.
+
+LƯU Ý
+- Dữ liệu nằm trong iPhone, không gửi lên GitHub hay bất kỳ đâu.
+- Xoá biểu tượng app khỏi màn hình chính = xoá dữ liệu. Sao lưu 2 tuần/lần.
+- Cập nhật app sau này: upload đè index.html mới lên GitHub, mở app 2 lần.
