@@ -1,5 +1,5 @@
 /* Offline cache for the home-screen app. Bump CACHE when files change. */
-const CACHE = "ppl15-v1";
+const CACHE = "ppl15-v2";
 const SHELL = ["./", "index.html", "manifest.webmanifest", "icon-180.png", "icon-192.png", "icon-512.png"];
 
 self.addEventListener("install", e => {
